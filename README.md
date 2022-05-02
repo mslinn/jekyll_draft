@@ -2,7 +2,7 @@ jekyll_draft
 [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 ===========
 
-This is a Jekyll plugin that provides two Liquid filters called `draft?` and `draft_html`.
+This is a Jekyll plugin that provides two Liquid filters called `is_draft` and `draft_html`.
 
 More information is available on my web site about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html).
 
@@ -28,12 +28,12 @@ Or install it yourself as:
 
 ## Usage
 
-### draft?
+### is_draft
 
 Filters a string containing a path and returns the portion of th path before the filename and extension.
 Example: Extracts "blah/blah" from the path.
 ```
-{{ page | draft? }} => true
+{{ page | is_draft }} => true
 ```
 
 
