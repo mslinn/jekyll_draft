@@ -3,6 +3,8 @@
 # Assumes that the target Jekyll website contains a script called _bin/debug.
 # See https://www.mslinn.com/blog/2022/02/21/jekyll-debugging.html
 
+if [ "$1" == -r ]; then shift; RUN="-r"; fi
+
 if [ -z "$1" ]; then
   echo "Error: Please provide the directory name of the Jekyll website where the plugin is to be tested from."
   exit 1
@@ -21,4 +23,5 @@ bin/build
 set -e
 
 cd "$1" > /dev/null || exit 1
-_bin/debug
+
+_bin/debug $RUN

@@ -1,6 +1,6 @@
 ---
 categories: [Jekyll, Ruby]
-description: Unpublished Test.
+description: Unpublished post.
 date: 2022-03-28
 last_modified_at: 2022-04-17
 layout: default
@@ -10,5 +10,14 @@ title: Unpublished Post
 <pre>
   is_draft = {{page | is_draft}}
   draft_html = {{page | draft_html}}
-  root = {{page | root}}
+  root = {{page | root: site}}
+</pre>
+
+<h2>page</h2>
+<pre>
+page.title={{page.title}}
+page.draft={{page.draft}}
+page.published={{page.published}}
+page.url={{page.url}}
+page.collection={{page.collection}}
 </pre>

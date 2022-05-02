@@ -1,11 +1,15 @@
 ---
-description: Jekyll plugin template demonstration
+description: Jekyll draft plugin demo
 layout: default
 title: Welcome
 ---
 <pre>
   is_draft = {{page | is_draft}}
   draft_html = {{page | draft_html}}
-  root = {{page | root}}
+  root = {{page | root: site}}
+
+  data = {{page.data}}
+
+  page.site = {{page.site}}
 </pre>
 <img src="/assets/images/jekyll.png">
