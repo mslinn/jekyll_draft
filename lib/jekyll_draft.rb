@@ -15,9 +15,9 @@ module Jekyll
       # puts "draft? invoked from #{doc.path}"
       return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
 
-      return !doc.published if doc.respond_to?(:published)
+      return doc.published==false if doc.respond_to?(:published)
 
-      return !doc['published'] if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('published'))
+      return doc['published']==false if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('published'))
 
       return doc.draft if doc.respond_to?(:draft)
 
