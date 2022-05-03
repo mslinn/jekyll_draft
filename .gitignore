@@ -1,6 +1,6 @@
 /.bundle/
 /.yardoc
-demo/_site
+_site
 /_yardoc/
 /coverage/
 /doc/
@@ -8,5 +8,6 @@ demo/_site
 /pkg/
 /spec/reports/
 /tmp/
+.jekyll-metadata
 Gemfile.lock
-spec/status_persistence.txt
+status_persistence.txt

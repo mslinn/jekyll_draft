@@ -24,13 +24,13 @@ layout: compress
   <![endif]-->
   <title>{{ page.title-override | default: page.title | default: page.subtitle }}</title>
   {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
-  {% if isDraft %}
-    <div class="bg_yellow draftPost">&mdash; Draft &mdash;</div>
-  {% endif %}
 </head>
 <body id="body">
   <header>
     <div class="inner">
+      {% if isDraft %}
+        <div class="bg_yellow draftPost">&mdash; Draft &mdash;</div>
+      {% endif %}
       <a href="/index.html">
         <div class="h1">{{ site.title }}</div>
       </a>

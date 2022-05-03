@@ -94,6 +94,12 @@ pre {
   width: 690px;
 }
 
+.bg_yellow {
+  background-color: yellow;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
 .codeLabel {
   color: white;
   background-color: #666;
