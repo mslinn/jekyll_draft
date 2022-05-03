@@ -10,19 +10,18 @@ module Jekyll
   # Define these methods outside of the filter module so they can be invoked externally
   module Draft
     def draft?(doc)
-      if doc.nil?
-        puts "Jekyll:Draft.draft? doc is nil!".yellow
-        return 'undefined_doc'
-      end
+      abort "Jekyll:Draft.draft? doc is nil!".red if doc.nil?
 
       # puts "draft? invoked from #{doc.path}"
       return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
 
-      return !doc['published'] if doc.key?('published')
-
       return !doc.published if doc.respond_to?(:published)
 
-      return doc['draft'] if doc.key?('draft')
+      return !doc['published'] if doc.respond_to?(:key) && doc.key?('published')
+
+      return doc.draft if doc.respond_to?(:draft)
+
+      return doc['draft'] if doc.respond_to?(:key) && doc.key?('draft')
 
       false
     end
@@ -39,7 +38,7 @@ module Jekyll
       return "/index.html" unless doc.respond_to?(:collection)
 
       collection_name = doc.collection
-      docs = site.respond_to?(collection_name) ? site[collection_name] : site.collections[collection_name].docs
+      docs = site.key?(collection_name) ? site[collection_name] : site.collections[collection_name].docs
       index = docs.find { |d| d.url.end_with? "index.html" }
       return index.url if index
 
