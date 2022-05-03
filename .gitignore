@@ -8,6 +8,7 @@ _site
 /pkg/
 /spec/reports/
 /tmp/
+.jekyll-cache/
 .jekyll-metadata
 Gemfile.lock
 status_persistence.txt
