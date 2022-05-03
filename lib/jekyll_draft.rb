@@ -17,11 +17,11 @@ module Jekyll
 
       return !doc.published if doc.respond_to?(:published)
 
-      return !doc['published'] if doc.respond_to?(:key) && doc.key?('published')
+      return !doc['published'] if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('published'))
 
       return doc.draft if doc.respond_to?(:draft)
 
-      return doc['draft'] if doc.respond_to?(:key) && doc.key?('draft')
+      return doc['draft'] if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('draft'))
 
       false
     end
