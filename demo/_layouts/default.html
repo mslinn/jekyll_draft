@@ -1,7 +1,7 @@
 ---
 layout: compress
 ---
-{% assign is_draft = page | is_draft %}
+{% assign draft = page | is_draft %}
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
 <head>
@@ -24,7 +24,7 @@ layout: compress
   <![endif]-->
   <title>{{ page.title-override | default: page.title | default: page.subtitle }}</title>
   {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
-  {% if is_draft %}
+  {% if draft %}
     <div class="bg_yellow draftPost">&mdash; Draft &mdash;</div>
   {% endif %}
 </head>
@@ -49,7 +49,7 @@ layout: compress
         </ul>
       </nav>
       <section id="main-content">
-        {% if is_draft %}
+        {% if draft %}
           <div class="watermarked">
             {{ content }}
           </div>
