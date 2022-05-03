@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "bundler", require: false
+gem "ruby-debug-ide", require: false
 # gem 'debase', require: false
 # gem 'debase-ruby_core_source', '>= 0.10.15', require: false
 gem "rake", require: false
