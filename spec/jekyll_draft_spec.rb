@@ -14,17 +14,17 @@ RSpec.describe(Jekyll::Draft) do # rubocop:disable Metrics/BlockLength
   end
   let(:page_not_draft) do
     page_ = double('Jekyll::Page')
-    allow(page_).to receive(:draft) { false } # lower priority
+    allow(page_).to receive(:draft) { false }
     page_
   end
   let(:page_published) do
     page_ = double('Jekyll::Page')
-    allow(page_).to receive(:published) { true } # higher priority
+    allow(page_).to receive(:published) { true }
     page_
   end
   let(:page_not_published) do
     page_ = double('Jekyll::Page')
-    allow(page_).to receive(:published) { false } # higher priority
+    allow(page_).to receive(:published) { false }
     page_
   end
 
