@@ -13,15 +13,15 @@ module Jekyll
     def draft?(doc) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       abort 'Jekyll:Draft.draft? doc is nil!'.red if doc.nil?
 
+      return doc.draft if doc.respond_to?(:draft)
+
+      return doc['draft'] if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('draft'))
+
       return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
 
       return doc.published == false if doc.respond_to?(:published)
 
       return doc['published'] == false if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('published'))
-
-      return doc.draft if doc.respond_to?(:draft)
-
-      return doc['draft'] if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('draft'))
 
       false
     end
