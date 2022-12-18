@@ -9,7 +9,7 @@ _site
 /spec/reports/
 /tmp/
 .jekyll-cache/
-demo/jekyll-cache/
+demo/.jekyll-cache/
 .jekyll-metadata
 Gemfile.lock
 status_persistence.txt
