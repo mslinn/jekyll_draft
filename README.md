@@ -24,18 +24,27 @@ And then execute:
 
 ## Usage
 
-### is_draft
+### `is_draft`
 
 Filters a page according to the directory it resides in, and its front matter.
 ```
 {{ page | is_draft }} => true
 ```
 
-### draft_html
+### `draft_html`
 Filters a page according to the directory it resides in, and its front matter.
 If the page is not a draft then the empty string is returned.
 ```
 {{ page | draft_html }} => " <i class='bg_light_yellow' style='padding-left: 0.5em; padding-right: 0.5em;'>Draft</i>"
+```
+
+### Invoking From Another Jekyll Plugin
+```ruby
+require 'jekyll_draft'
+
+p 'Found a draft' if Jekyll::Draft.is_draft post
+
+draft = Jekyll::Draft.draft_html post
 ```
 
 
