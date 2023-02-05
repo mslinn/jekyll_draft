@@ -2,7 +2,7 @@ jekyll_draft
 [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 ===========
 
-This is a Jekyll plugin that provides two Liquid filters called `is_draft` and `draft_html`.
+This is a Jekyll plugin that provides two Liquid filters: `is_draft` and `draft_html`.
 
 More information is available on my web site about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html).
 
@@ -21,19 +21,21 @@ And then execute:
 
     $ bundle install
 
-Or install it yourself as:
-
-    $ gem install jekyll_draft
-
 
 ## Usage
 
 ### is_draft
 
-Filters a string containing a path and returns the portion of th path before the filename and extension.
-Example: Extracts "blah/blah" from the path.
+Filters a page according to the directory it resides in, and its front matter.
 ```
 {{ page | is_draft }} => true
+```
+
+### draft_html
+Filters a page according to the directory it resides in, and its front matter.
+If the page is not a draft then the empty string is returned.
+```
+{{ page | draft_html }} => " <i class='bg_light_yellow' style='padding-left: 0.5em; padding-right: 0.5em;'>Draft</i>"
 ```
 
 
