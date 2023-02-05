@@ -1,0 +1,30 @@
+---
+categories:
+date: 2023-02-05
+description: "This document sets <code>published: false</code>."
+last_modified_at: 2023-02-05
+layout: default
+order: 0
+published: false
+reading_time: false
+title: Unpublished Document
+---
+<p>
+  This document sets <code>published: false</code> in the front matter.
+</p>
+<pre>
+<b>is_draft</b> = {{ page | is_draft }}
+<b>draft_html</b> = {{ page | draft_html }}
+<b>root</b> = {{ page | root: site }}
+<b>is_unpublished</b> = {{ page | is_unpublished }}
+</pre>
+
+<h2>page</h2>
+<pre>
+<b>page.title</b>={{page.title}}
+<b>page.data</b>={{page.data}}
+<b>page.draft</b>={{page.draft}}
+<b>page.published</b>={{page.published}}
+<b>page.url</b>={{page.url}}
+<b>page.collection</b>={{page.collection}}
+</pre>

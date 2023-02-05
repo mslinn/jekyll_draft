@@ -4,10 +4,21 @@ jekyll_draft
 
 This is a Jekyll plugin that provides two Liquid filters: `is_draft` and `draft_html`.
 
-More information is available on my web site about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html).
+More information is available on my website about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html).
 
 
 ## Installation
+
+Add the following to your CSS:
+```css
+.jekyll_draft {
+  background-color: #fefeab;
+  padding-bottom: 2px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: 2px;
+}
+```
 
 Add this line to your Jekyll website's `Gemfile`, within the `jekyll_plugins` group:
 
@@ -47,6 +58,14 @@ p 'Found a draft' if Jekyll::Draft.is_draft post
 draft = Jekyll::Draft.draft_html post
 ```
 
+## Demo
+The [`demo`](./demo) directory contains a demonstration website, which uses the plugin.
+To run, type:
+```console
+$ demo/_bin/debug -r
+```
+Now point your web browser to http://localhost:4444
+
 
 ## Development
 
@@ -71,6 +90,21 @@ To release a new version,
      ```
      The above creates a git tag for the version, commits the created tag,
      and pushes the new `.gem` file to [RubyGems.org](https://rubygems.org).
+
+### Debugging
+Run `bin/attach` and pass the directory name of a Jekyll website that has a suitable script called `_bin/debug`.
+The `demo` subdirectory fits this description.
+```console
+$ bin/attach demo
+Successfully uninstalled jekyll_draft-0.1.0
+jekyll_draft 0.1.0 built to pkg/jekyll_draft-0.1.0.gem.
+jekyll_draft (0.1.0) installed.
+Fast Debugger (ruby-debug-ide 0.7.3, debase 0.2.4.1, file filtering is supported) listens on 0.0.0.0:1234
+```
+Now attach to the debugger process.
+This git repo includes a [Visual Studio Code launcher](./.vscode/launch.json) for this purpose labeled `Listen for rdebug-ide`.
+
+Now point your web browser to http://localhost:4444
 
 
 ## Contributing

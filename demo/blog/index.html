@@ -3,9 +3,28 @@ canonical_url: 'https://bogus.jekylldemo.com/blog/index.html'
 description: Blog posts by category
 layout: default
 reading_time: false
-subtitle: Blog Posts by Category
-title-override: "Blog Posts by Category"
+subtitle: Unspecified Published Setting
 ---
+<p>
+  This document does not specify the <code>published</code> setting; it should be published by default.
+</p>
+<pre>
+<b>is_draft</b>={{page | is_draft}}
+<b>draft_html</b>={{page | draft_html}}
+<b>root</b>={{page | root: site}}
+</pre>
+
+<h2>Page</h2>
+<pre>
+<b>data</b>={{page.data}}
+<b>page.collection</b>={{page.collection}}
+<b>page.draft</b>={{page.draft}}
+<b>page.published</b>={{page.published}}
+<b>page.site</b>= {{page.site}}
+<b>page.title</b>={{page.title}}
+<b>page.url</b>={{page.url}}
+</pre>
+
 <style>
   li {
     list-style-type: none;

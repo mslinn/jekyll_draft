@@ -5,6 +5,19 @@ reading_time: false
 subtitle: Blog Posts, Listed Newest to Oldest
 title-override: Blog Posts, Listed Newest to Oldest
 ---
+<p>
+  The <code>published</code> setting was not mentioned in this document's front matter.
+</p>
+<pre>
+  is_draft = {{page | is_draft}}
+  draft_html = {{page | draft_html}}
+  root = {{page | root: site}}
+
+  data = {{page.data}}
+
+  page.site = {{page.site}}
+</pre>
+
 <style>
   li {
     list-style-type: none;

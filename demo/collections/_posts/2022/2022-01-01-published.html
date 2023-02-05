@@ -1,0 +1,24 @@
+---
+categories: [Jekyll, Ruby]
+description: The published setting is not specified in the front matter.
+date: 2022-03-28
+last_modified_at: 2022-04-01
+layout: default
+title: Published Post By Default
+---
+<pre>
+<b>is_draft</b> = {{ page | is_draft }}
+<b>draft_html</b> = {{ page | draft_html }}
+<b>root</b> = {{ page | root: site }}
+<b>is_unpublished</b> = {{ page | is_unpublished }}
+</pre>
+
+<h2>page</h2>
+<pre>
+<b>page.title</b>={{page.title}}
+<b>page.data</b>={{page.data}}
+<b>page.draft</b>={{page.draft}}
+<b>page.published</b>={{page.published}}
+<b>page.url</b>={{page.url}}
+<b>page.collection</b>={{page.collection}}
+</pre>

@@ -1,4 +1,14 @@
 author: Mike Slinn
+collections:
+  av_studio:
+    output: true
+    relative_directory: _av_studio
+    sort_by: order
+  jekyll:
+    output: true
+    relative_directory: _jekyll
+    sort_by: order
+collections_dir: collections
 compress_html:
   blanklines: false
   clippings: all

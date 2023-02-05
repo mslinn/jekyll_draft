@@ -1,0 +1,28 @@
+---
+date: 2023-02-05
+description: I am a published document.
+last_modified_at: 2023-02-05
+layout: default
+order: 1
+published: true
+title: Published Document
+---
+<p>
+  The front matter in this document sets <code>published: true</code>.
+</p>
+<pre>
+<b>is_draft</b> = {{ page | is_draft }}
+<b>draft_html</b> = {{ page | draft_html }}
+<b>root</b> = {{ page | root: site }}
+<b>is_unpublished</b> = {{ page | is_unpublished }}
+</pre>
+
+<h2>page</h2>
+<pre>
+<b>page.title</b>={{page.title}}
+<b>page.data</b>={{page.data}}
+<b>page.draft</b>={{page.draft}}
+<b>page.published</b>={{page.published}}
+<b>page.url</b>={{page.url}}
+<b>page.collection</b>={{page.collection}}
+</pre>

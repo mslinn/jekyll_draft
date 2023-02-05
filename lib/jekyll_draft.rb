@@ -1,27 +1,23 @@
-# frozen_string_literal: true
-
 # @author Copyright 2022 {https://www.mslinn.com Michael Slinn}
 
 require 'jekyll_plugin_logger'
 require 'yaml'
 
-# Detects draft documents
+# Jekyll filter that detects draft documents
 module Jekyll
   # Define these methods outside of module DraftFilter so they can be invoked externally and tested easily
   module Draft
-    # @return true if doc front matter contains published that is not true, or document is in _drafts; published has priority
-    def draft?(doc) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      abort 'Jekyll:Draft.draft? doc is nil!'.red if doc.nil?
+    # @return true if document front matter contains published that is not true,
+    # or document is in _drafts.
+    # If draft and published are both specified in front matter then published has priority.
+    def draft?(doc)
+      abort 'Jekyll::Draft.draft? doc is nil!'.red if doc.nil?
 
-      return doc.draft if doc.respond_to?(:draft)
+      return doc.draft if doc.respond_to?(:draft) # Try Jekyll's naming convention to determine draft status
 
-      return doc['draft'] if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('draft'))
+      return is_unpublished(doc) if published_was_specified(doc)
 
-      return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
-
-      return doc.published == false if doc.respond_to?(:published)
-
-      return doc['published'] == false if doc.respond_to?(:[]) || (doc.respond_to?(:key) && doc.key?('published'))
+      return doc['draft'] if doc&.key?('draft')
 
       false
     end
@@ -30,7 +26,7 @@ module Jekyll
     def draft_html(doc)
       return '' unless draft?(doc)
 
-      " <i class='bg_light_yellow' style='padding-left: 0.5em; padding-right: 0.5em;'>Draft</i>"
+      " <i class='jekyll_draft'>Draft</i>"
     end
 
     # @return path to root of the collection that doc is a member of
@@ -45,10 +41,34 @@ module Jekyll
       docs.min.url
     end
 
-    module_function :draft?, :draft_html, :root
+    # Non-standard name used so this method could be invoked from Liquid
+    # @return true if published was specified in a document's front matter, and the value is false
+    def published_was_specified(doc)
+      return true if doc.respond_to?('published')
+
+      return true if doc.key?('published')
+
+      return true if doc.respond_to?('data') && doc.data.key?('published')
+
+      false
+    end
+
+    # Non-standard name used so this method could be invoked from Liquid
+    # @return true if published was specified in a document's front matter, and the value is false
+    def is_unpublished(doc) # rubocop:disable Naming/PredicateName
+      return !doc.published if doc.respond_to?('published')
+
+      return !doc['published'] if doc.key?('published')
+
+      return !doc.data['published'] if doc.respond_to?('data') && doc.data.key?('published')
+
+      false
+    end
+
+    module_function :draft?, :draft_html, :is_unpublished, :published_was_specified, :root
   end
 
-  # Interface to Jekyll filters
+  # Jekyll filters interface
   module DraftFilter
     def is_draft(doc) # rubocop:disable Naming/PredicateName
       Draft.draft?(doc)
@@ -56,6 +76,10 @@ module Jekyll
 
     def draft_html(doc)
       Draft.draft_html(doc)
+    end
+
+    def is_unpublished(doc) # rubocop:disable Naming/PredicateName
+      Draft.is_unpublished(doc)
     end
 
     def root(doc, site)

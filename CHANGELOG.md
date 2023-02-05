@@ -1,3 +1,7 @@
+## 1.1.0 / 2023-02-05
+  * Works with CSS classes instead of generating CSS styling
+  * Improved how unpublished documents are recognized
+
 ## 1.0.1 / 2022-08-05
   * Improved how drafts are recognized
 
