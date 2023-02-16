@@ -16,7 +16,7 @@ module Jekyll
       return is_unpublished(doc) if published_was_specified(doc)
 
       # Try Jekyll's naming convention to determine draft status
-      return doc['draft'] if doc&.key?('draft')
+      return doc.data['draft'] if doc.respond_to?('data') && doc.data.key?('draft')
       return doc.draft if doc.respond_to?(:draft)
 
       false
@@ -46,9 +46,9 @@ module Jekyll
     def published_was_specified(doc)
       return true if doc.respond_to?('published')
 
-      return true if doc.key?('published')
+      return false unless doc.respond_to?('data')
 
-      return true if doc.respond_to?('data') && doc.data.key?('published')
+      return true if doc.data.key?('published')
 
       false
     end
