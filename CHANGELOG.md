@@ -1,3 +1,6 @@
+## 1.1.1 / 2023-02-16
+  * Avoids Jekyll generating the message `Deprecation: Document#draft is now a key in the #data hash.`
+
 ## 1.1.0 / 2023-02-05
   * Works with CSS classes instead of generating CSS styling
   * Improved how unpublished documents are recognized

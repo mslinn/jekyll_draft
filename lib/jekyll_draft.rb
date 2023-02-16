@@ -13,11 +13,11 @@ module Jekyll
     def draft?(doc)
       abort 'Jekyll::Draft.draft? doc is nil!'.red if doc.nil?
 
-      return doc.draft if doc.respond_to?(:draft) # Try Jekyll's naming convention to determine draft status
-
       return is_unpublished(doc) if published_was_specified(doc)
 
+      # Try Jekyll's naming convention to determine draft status
       return doc['draft'] if doc&.key?('draft')
+      return doc.draft if doc.respond_to?(:draft)
 
       false
     end
