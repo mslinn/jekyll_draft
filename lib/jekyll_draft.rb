@@ -16,7 +16,7 @@ module Jekyll
       return is_unpublished(doc) if published_was_specified(doc)
 
       # Try Jekyll's naming convention to determine draft status
-      return doc.data['draft'] if doc.respond_to?('data') && doc.data.key?('draft')
+      return doc.data['draft'] if doc.respond_to?(:data) && doc.data.key?('draft')
       return doc.draft if doc.respond_to?(:draft)
 
       false
@@ -44,9 +44,9 @@ module Jekyll
     # Non-standard name used so this method could be invoked from Liquid
     # @return true if published was specified in a document's front matter, and the value is false
     def published_was_specified(doc)
-      return true if doc.respond_to?('published')
+      return true if doc.respond_to?(:published)
 
-      return false unless doc.respond_to?('data')
+      return false unless doc.respond_to?(:data)
 
       return true if doc.data.key?('published')
 
@@ -56,11 +56,11 @@ module Jekyll
     # Non-standard name used so this method could be invoked from Liquid
     # @return true if published was specified in a document's front matter, and the value is false
     def is_unpublished(doc) # rubocop:disable Naming/PredicateName
-      return !doc.published if doc.respond_to?('published')
+      return !doc.published if doc.respond_to?(:published)
 
       return !doc['published'] if doc.key?('published')
 
-      return !doc.data['published'] if doc.respond_to?('data') && doc.data.key?('published')
+      return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
 
       false
     end
