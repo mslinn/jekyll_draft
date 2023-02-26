@@ -1,3 +1,6 @@
+## 1.1.2 / 2023-02-25
+  * Avoids Jekyll generating the message `Deprecation: Document#published is now a key in the #data hash.`
+
 ## 1.1.1 / 2023-02-16
   * Avoids Jekyll generating the message `Deprecation: Document#draft is now a key in the #data hash.`
 

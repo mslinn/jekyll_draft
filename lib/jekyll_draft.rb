@@ -53,14 +53,15 @@ module Jekyll
       false
     end
 
-    # Non-standard name used so this method could be invoked from Liquid
+    # Non-standard name used so this method could be invoked from Liquid.
+    # Looks in data before checking for property.
     # @return true if published was specified in a document's front matter, and the value is false
     def is_unpublished(doc) # rubocop:disable Naming/PredicateName
+      return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
+
       return !doc.published if doc.respond_to?(:published)
 
       return !doc['published'] if doc.key?('published')
-
-      return !doc.data['published'] if doc.respond_to?(:data) && doc.data.key?('published')
 
       false
     end
