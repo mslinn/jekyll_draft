@@ -4,7 +4,7 @@ jekyll_draft
 
 This is a Jekyll plugin that provides two Liquid filters: `is_draft` and `draft_html`.
 
-More information is available on my website about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html).
+More information is available on my website about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html#draft).
 
 
 ## Installation
@@ -30,21 +30,25 @@ end
 
 And then execute:
 
-    $ bundle install
+    $ bundle
 
 
 ## Usage
 
 ### `is_draft`
 
-Filters a page according to the directory it resides in, and its front matter.
+This filter detects if a page is invisible when published in  `production` mode,
+and either returns `true` or `false`.
 ```
 {{ page | is_draft }} => true
 ```
 
 ### `draft_html`
-Filters a page according to the directory it resides in, and its front matter.
+This filter generates HTML to display if a page is invisible when published in `production` mode.
 If the page is not a draft then the empty string is returned.
+The generated HTML for draft pages is:<br>
+`" &lt;i class='jekyll_draft'>Draft&lt;/i>"`
+
 ```
 {{ page | draft_html }} => " <i class='bg_light_yellow' style='padding-left: 0.5em; padding-right: 0.5em;'>Draft</i>"
 ```
@@ -53,7 +57,7 @@ If the page is not a draft then the empty string is returned.
 ```ruby
 require 'jekyll_draft'
 
-p 'Found a draft' if Jekyll::Draft.is_draft post
+puts 'Found a draft' if Jekyll::Draft.is_draft post
 
 draft = Jekyll::Draft.draft_html post
 ```
@@ -73,7 +77,7 @@ After checking out the repo, run `bin/setup` to install dependencies. You can al
 
 Install development dependencies like this:
 ```
-$ BUNDLE_WITH="development" bundle install
+$ BUNDLE_WITH="development" bundle
 ```
 
 To install this gem onto your local machine, run:
