@@ -3,8 +3,8 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in jekyll_draft.gemspec
 gemspec
 
-group :development, :test do
-  gem 'debase', '0.2.5.beta2', require: false
+group :test, :development do
+  gem 'debug', '>= 1.0.0', require: false
   gem 'rake', require: false
   gem 'rspec', require: false
   gem 'rubocop', require: false

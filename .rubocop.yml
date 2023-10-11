@@ -73,6 +73,9 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Max: 15
 
+RSpec/NoExpectationExample:
+  Enabled: false
+
 Style/CommandLiteral:
   Enabled: false
 
