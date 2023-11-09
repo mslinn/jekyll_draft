@@ -27,8 +27,8 @@
     {
       "debugPort": "0",
       "name": "Attach rdbg",
-      "type": "rdbg",
       "request": "attach",
+      "type": "rdbg",
     },
     {
       "args": [

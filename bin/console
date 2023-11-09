@@ -2,7 +2,7 @@
 
 require 'bundler/setup'
 require 'irb'
-require 'jekyll_draft'
-require 'liquid'
+require 'jekyll'
+require_relative '../lib/jekyll_draft'
 
 IRB.start(__FILE__)
