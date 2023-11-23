@@ -23,7 +23,7 @@
       "request": "launch",
       "script": "${workspaceRoot}/binstub/jekyll",
       "type": "rdbg",
-      "useBundler": true,
+      "showProtocolLog": true
     },
     {
       "debugPort": "0",
