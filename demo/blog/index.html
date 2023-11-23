@@ -41,7 +41,7 @@ subtitle: Unspecified Published Setting
       <li>
           <span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%Y-%m-%d" }}</time></span>
           &nbsp;
-          <a href="post.url">{{ post.title }}</a> {{post | draft_html}}
+          <a href="{{post.url}}">{{ post.title }}</a> {{post | draft_html}}
       </li>
     {% endfor %}
     {% assign post_list = nil %}
