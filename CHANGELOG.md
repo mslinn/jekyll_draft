@@ -2,7 +2,8 @@
 
 ## 2.0.0 / 2023-11-29
 
-* Made into a Jekyll inline tag, because the filter implementation had problems with infinite recursing Jekyll exerpts.
+* Made into a Jekyll block tag, because the filter implementation had problems with infinite recursing Jekyll exerpts.
+  This was a complete rewrite, incompatible with previous version.
 
 
 ## 1.1.2 / 2023-02-25

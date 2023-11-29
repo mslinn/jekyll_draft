@@ -1,3 +1,3 @@
 module DraftVersion
-  VERSION = '1.1.2'.freeze unless defined?(VERSION)
+  VERSION = '2.0.0'.freeze
 end
