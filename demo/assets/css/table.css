@@ -1,0 +1,116 @@
+table, th, td {
+  border: 1px solid #9b9b9b;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  font-family: $theme-font;
+  font-weight: bold;
+  padding: 0.3em;
+}
+
+td {
+  font-weight: 300;
+  text-align: left;
+  padding: 0.3em;
+}
+
+table.info {
+  border-spacing: 15px;
+  padding: 15px;
+  width: 100%;
+}
+
+table.info2 {
+  border-spacing: 5px;
+  padding: 5px;
+  width: 100%;
+}
+
+table.info, .info td, table.info2, .info2 td {
+  border: thin solid #999;
+}
+
+table.table {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+table.table tr.dark,
+table.table th.dark,
+table.table td.dark {
+  color: ivory;
+  background-color: #515151;
+}
+
+table.table_cell_top td {
+  vertical-align: top;
+}
+
+.table td > ul:first-of-type {
+  margin-top: 0;
+}
+
+.table td > ul:last-of-type {
+  margin-bottom: 0;
+}
+
+.table td > ul:last-of-type li:last-of-type {
+  margin-bottom: 0;
+}
+
+table.noborder, table.noborder tr,  table.noborder th, .noborder tr td {
+  border: none;
+  border-collapse: collapse;
+  padding: 0.75em;
+  text-align: left;
+}
+
+td.nobreak, th.nobreak {
+  white-space: nowrap;
+}
+
+th.tableLabel, .tableLabel {
+  font-weight: bold;
+  text-align: left;
+}
+
+.table_cell_vspace th, .table_cell_vspace td {
+  padding-bottom: 0.75em;
+  padding-top: 0.75em;
+}
+
+.table_cell_justify td {
+  text-align: left;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+table.condensed, .condensed tr {
+  padding: 0;
+}
+
+.condensed tr td, .noborder.condensed tr td {
+  padding: 0;
+}
+
+.condensed tr th, .noborder.condensed tr th {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.table tr:hover {
+  background-color: #EBECCD;
+}
+
+.table ul {
+  list-style-type: none;
+}
+
+.table ul > li {
+  text-indent: 0;
+  margin-left: 0;
+}

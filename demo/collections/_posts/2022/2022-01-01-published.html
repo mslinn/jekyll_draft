@@ -1,27 +1,14 @@
 ---
-categories: [Jekyll, Ruby]
-description: The published setting is not specified in the front matter.
-date: 2022-03-28
-last_modified_at: 2022-04-01
-layout: default
+date: 2022-01-01
+layout: minimal
 title: Published Post
 ---
-<p>
-  The published setting is not specified in the front matter, so this document should not be a draft.
-</p>
-<pre>
-<b>is_draft</b> = {{ page | is_draft }}
-<b>draft_html</b> = {{ page | draft_html }}
-<b>root</b> = {{ page | root: site }}
-<b>is_unpublished</b> = {{ page | is_unpublished }}
-</pre>
-
-<h2>page</h2>
-<pre>
-<b>page.title</b>={{page.title}}
-<b>page.data</b>={{page.data}}
-<b>page.draft</b>={{page.draft}}
-<b>page.published</b>={{page.published}}
-<b>page.url</b>={{page.url}}
-<b>page.collection</b>={{page.collection}}
-</pre>
+{% if_draft %}
+  <p class="error">
+    Error: The front matter does not specify <code>published</code>, so this is not a draft document.
+  </p>
+{% else %}
+  <p>
+    The front matter does not specify <code>published</code> and it was properly classified as not being a draft document.
+  </p>
+{% endif_draft %}

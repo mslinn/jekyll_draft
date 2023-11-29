@@ -1,7 +1,6 @@
 ---
 layout: compress
 ---
-{% assign isDraft = page | is_draft %}
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
 <head>
@@ -11,9 +10,10 @@ layout: compress
   {% capture description %}{{ page.description | default: page.title | default: page.subtitle }}{% endcapture %}
   {% capture page.title %}{{ page.title | default: page.subtitle }}{% endcapture %}
   {% assign nowMillis = site.time | date: '%s' %}
-  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: nowMillis }}" type="text/css">
+  <link rel="stylesheet" href="{{ '/assets/css/table.css?v=' | append: nowMillis }}" type="text/css">
   <link rel="stylesheet" href="{{ '/assets/css/jekyll_plugin_support.css?v=' | append: nowMillis }}" type="text/css">
   <link rel="stylesheet" href="{{ '/assets/css/jekyll_draft.css?v=' | append: nowMillis }}" type="text/css">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: nowMillis }}" type="text/css">
   <link rel="icon" type="image/png" href="/assets/images/favicon.png">
   <title>{{ page.title-override | default: page.title | default: page.subtitle }}</title>
   {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
@@ -21,10 +21,9 @@ layout: compress
 <body id="body">
   <header>
     <div class="inner">
-      <b style="color: yellow;">isDraft={{isDraft}}</b>
-      {% if isDraft %}
+      {% if_draft %}
         <div class="bg_yellow draftPost">&mdash; Draft &mdash;</div>
-      {% endif %}
+      {% endif_draft %}
       <a href="/index.html">
         <div class="h1">{{ site.title }}</div>
       </a>
@@ -35,23 +34,14 @@ layout: compress
   </header>
   <div id="content-wrapper">
     <div class="inner clearfix">
-      <nav id="sidebar">
-        <ul>
-          <li><a href="/index.html">Welcome!</a></li>
-          <li><a href="/blog/">Blog by date</a></li>
-          <li><a href="/blog/blogsByDate.html">Blog last_modified</a></li>
-          <li><a href="/av_studio/">A/V Studio</a></li>
-          <li><a href="/jekyll/">Jekyll</a></li>
-        </ul>
-      </nav>
       <section id="main-content">
-        {% if isDraft %}
+        {% if_draft %}
           <div class="watermarked">
             {{ content }}
           </div>
         {% else %}
           {{ content }}
-        {% endif %}
+        {% endif_draft %}
 
         <p class="copyright" id="copyright" xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
           <a rel="license" style="float: left; margin-right: 1em; padding-top: 9px; padding-bottom: 2em;"

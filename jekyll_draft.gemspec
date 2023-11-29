@@ -29,8 +29,8 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.required_ruby_version = '>= 2.6.0'
   spec.summary = 'This Jekyll filter detects draft documents.'
   spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
-  spec.version = JekyllDraftVersion::VERSION
+  spec.version = DraftVersion::VERSION
 
   spec.add_dependency 'jekyll', '>= 3.5.0'
-  spec.add_dependency 'jekyll_plugin_logger'
+  spec.add_dependency 'jekyll_plugin_support'
 end

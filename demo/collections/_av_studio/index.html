@@ -1,30 +1,15 @@
 ---
-categories:
 date: 2023-02-05
-description: "This document sets <code>published: false</code>."
-last_modified_at: 2023-02-05
-layout: default
-order: 0
+layout: minimal
 published: false
-reading_time: false
 title: Unpublished AV/Studio Document By Front Matter
 ---
-<p>
-  This document sets <code>published: false</code> in the front matter so it is a draft.
-</p>
-<pre>
-<b>is_draft</b> = {{ page | is_draft }}
-<b>draft_html</b> = {{ page | draft_html }}
-<b>root</b> = {{ page | root: site }}
-<b>is_unpublished</b> = {{ page | is_unpublished }}
-</pre>
-
-<h2>page</h2>
-<pre>
-<b>page.title</b>={{page.title}}
-<b>page.data</b>={{page.data}}
-<b>page.draft</b>={{page.draft}}
-<b>page.published</b>={{page.published}}
-<b>page.url</b>={{page.url}}
-<b>page.collection</b>={{page.collection}}
-</pre>
+{% if_draft %}
+  <p>
+    The front matter specified <code>published: false</code> so this is a draft document.
+  </p>
+{% else %}
+  <p class="error">
+    Error: this document contains front matter with <code>published: false</code>, but is was not classified as a draft.
+  </p>
+{% endif_draft %}

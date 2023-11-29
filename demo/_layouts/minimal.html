@@ -1,0 +1,31 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {% capture description %}{{ page.description | default: page.title | default: page.subtitle }}{% endcapture %}
+  {% capture page.title %}{{ page.title | default: page.subtitle }}{% endcapture %}
+  {% assign nowMillis = site.time | date: '%s' %}
+  <link rel="stylesheet" href="{{ '/assets/css/table.css?v=' | append: nowMillis }}" type="text/css">
+  <link rel="stylesheet" href="{{ '/assets/css/jekyll_plugin_support.css?v=' | append: nowMillis }}" type="text/css">
+  <link rel="stylesheet" href="{{ '/assets/css/jekyll_draft.css?v=' | append: nowMillis }}" type="text/css">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: nowMillis }}" type="text/css">
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <title>{{ page.title-override | default: page.title | default: page.subtitle }}</title>
+  {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
+</head>
+<body id="body">
+<p><code><b>{{page.url}}</b></code></p>
+{% if_draft %}
+  <div class="watermarked">
+    {{ content }}
+  </div>
+{% else %}
+  {{ content }}
+{% endif_draft %}
+</body>
+</html>

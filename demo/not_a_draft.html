@@ -1,0 +1,10 @@
+---
+description: Jekyll draft plugin demo
+layout: minimal
+title: Welcome
+---
+{% if_draft %}
+  <p class="error">Error: this is not a draft document but is was classified as such.
+{% else %}
+  <p>Cool!: this is not a draft document and it was properly classified.
+{% endif_draft %}

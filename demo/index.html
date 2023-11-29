@@ -3,13 +3,29 @@ description: Jekyll draft plugin demo
 layout: default
 title: Welcome
 ---
-<pre>
-  is_draft = {{page | is_draft}}
-  draft_html = {{page | draft_html}}
-  root = {{page | root: site}}
-
-  data = {{page.data}}
-
-  page.site = {{page.site}}
-</pre>
-<img src="/assets/images/jekyll.png">
+<table class="fullsize table">
+  <tr>
+    <td>
+      <iframe class="fullsize" src="not_a_draft.html"></iframe>
+    </td>
+    <td>
+      <iframe class="fullsize" src="/blog/"></iframe>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <iframe class="fullsize" src="/blog/2022/01/01/published.html"></iframe>
+    </td>
+    <td>
+      <iframe class="fullsize" src="/jekyll/i_am_published.html"></iframe>
+    </td>
+  </tr>
+  <tr><tr>
+    <td>
+      <iframe class="fullsize" src="/blog/2022/05/01/draft.html"></iframe>
+    </td>
+    <td>
+      <iframe class="fullsize" src="/av_studio/"></iframe>
+    </td>
+  </tr>
+</table>

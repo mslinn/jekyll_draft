@@ -1,27 +1,15 @@
 ---
-categories: [Jekyll]
 description: Just a draft test post I wrote
-date: 2022-03-28
-last_modified_at: 2022-04-12
-layout: default
+date: 2022-05-01
+layout: minimal
 title: Draft Post
 ---
-<p>
-  This document is a draft because it is stored in <code>_drafts</code>.
-</p>
-<pre>
-<b>is_draft</b> = {{ page | is_draft }}
-<b>draft_html</b> = {{ page | draft_html }}
-<b>root</b> = {{ page | root: site }}
-<b>is_unpublished</b> = {{ page | is_unpublished }}
-</pre>
-
-<h2>page</h2>
-<pre>
-<b>page.title</b>={{page.title}}
-<b>page.data</b>={{page.data}}
-<b>page.draft</b>={{page.draft}}
-<b>page.published</b>={{page.published}}
-<b>page.url</b>={{page.url}}
-<b>page.collection</b>={{page.collection}}
-</pre>
+{% if_draft %}
+  <p>
+    This blog post is saved in the <code>_drafts/</code> folder, so this is a draft document.
+  </p>
+{% else %}
+  <p class="error">
+    This blog post is saved in the <code>_drafts/</code> folder, but is was not classified as a draft.
+  </p>
+{% endif_draft %}

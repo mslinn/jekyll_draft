@@ -2,27 +2,17 @@
 date: 2023-02-05
 description: I am a published document.
 last_modified_at: 2023-02-05
-layout: default
+layout: minimal
 order: 1
 published: true
 title: Published Document
 ---
-<p>
-  The front matter in this document sets <code>published: true</code>.
-</p>
-<pre>
-<b>is_draft</b> = {{ page | is_draft }}
-<b>draft_html</b> = {{ page | draft_html }}
-<b>root</b> = {{ page | root: site }}
-<b>is_unpublished</b> = {{ page | is_unpublished }}
-</pre>
-
-<h2>page</h2>
-<pre>
-<b>page.title</b>={{page.title}}
-<b>page.data</b>={{page.data}}
-<b>page.draft</b>={{page.draft}}
-<b>page.published</b>={{page.published}}
-<b>page.url</b>={{page.url}}
-<b>page.collection</b>={{page.collection}}
-</pre>
+{% if_draft %}
+  <p class="error">
+    Error: The front matter does specify <code>published=true</code>, so this is not a draft document.
+  </p>
+{% else %}
+  <p>
+    The front matter specifies <code>published=true</code> and it was properly classified as not being a draft document.
+  </p>
+{% endif_draft %}

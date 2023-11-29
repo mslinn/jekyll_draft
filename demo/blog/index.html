@@ -1,50 +1,15 @@
 ---
 canonical_url: 'https://bogus.jekylldemo.com/blog/index.html'
 description: Blog posts by category
-layout: default
-reading_time: false
+layout: minimal
 subtitle: Unspecified Published Setting
 ---
-<p>
-  This document does not specify the <code>published</code> setting; it should be published by default.
-</p>
-<pre>
-<b>is_draft</b>={{page | is_draft}}
-<b>draft_html</b>={{page | draft_html}}
-<b>root</b>={{page | root: site}}
-</pre>
-
-<h2>Page</h2>
-<pre>
-<b>data</b>={{page.data}}
-<b>page.collection</b>={{page.collection}}
-<b>page.draft</b>={{page.draft}}
-<b>page.published</b>={{page.published}}
-<b>page.site</b>= {{page.site}}
-<b>page.title</b>={{page.title}}
-<b>page.url</b>={{page.url}}
-</pre>
-
-<style>
-  li {
-    list-style-type: none;
-    margin-bottom: 6px;
-    text-indent: -6.3em;
-    margin-left: 6.3em;
-  }
-</style>
-{% assign sorted_categories = site.categories | sort_natural %}
-{% for category in sorted_categories %}
-  <h2 class='tag' id="{{ category[0] }}">{{ category[0] }}</h2>
-  <ul class="posts">
-    {% for post in site.posts %}
-      <li>
-          <span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%Y-%m-%d" }}</time></span>
-          &nbsp;
-          <a href="{{post.url}}">{{ post.title }}</a> {{post | draft_html}}
-      </li>
-    {% endfor %}
-    {% assign post_list = nil %}
-    {% assign group = nil %}
-  </ul>
-{% endfor %}
+{% if_draft %}
+  <p class="error">
+    Error: The front matter does not specify <code>published</code>, so this is not a draft document.
+  </p>
+{% else %}
+  <p>
+    The front matter does not specify <code>published</code> and it was properly classified as not being a draft document.
+  </p>
+{% endif_draft %}
