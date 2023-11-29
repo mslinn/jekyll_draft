@@ -74,6 +74,10 @@ header > .inner {
   padding-top: 40px;
 }
 
+iframe {
+  height: 200px;
+}
+
 nav#sidebar {
   float: right;
   line-height: 1.3;
