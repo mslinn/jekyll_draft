@@ -3,15 +3,15 @@ layout: minimal
 published: false
 ---
 <p>
-  This document is in the <code>_av_studio</code> collection.
+  This document is in the <code>_av_studio</code> collection and
+  has front matter that specifies <code>published: false</code>.
 </p>
 {% if_draft %}
   <p>
-    The front matter specified <code>published: false</code> so this is a draft document.
+    This document was properly classified as a draft.
   </p>
 {% else %}
   <p class="error">
-    Error: contains front matter with <code>published: false</code>,
-    but it was not classified as a draft.
+    Error: this document was not classified as a draft.
   </p>
 {% endif_draft %}

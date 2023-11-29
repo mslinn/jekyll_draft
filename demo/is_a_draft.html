@@ -3,14 +3,15 @@ description: Jekyll draft plugin demo
 layout: minimal
 published: false
 ---
+<p>
+  This is document is not in a collection and has <code>published: false</code> in the front matter.
+</p>
 {% if_draft %}
   <p>
-    This is document is not in a collection,
-    has <code>published: false</code> in front matter,
-    and it was properly classified.
+    This document was properly classified.
   </p>
 {% else %}
   <p class="error">
-    Error: this is a draft document but it was not classified as such.
+    Error: this document was not classified as a draft.
   </p>
 {% endif_draft %}

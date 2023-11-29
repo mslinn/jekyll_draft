@@ -7,12 +7,16 @@ order: 1
 published: true
 title: Published Document
 ---
+<p>
+  Error: The front matter specifies <code>published=true</code>,
+  so this is not a draft document.
+</p>
 {% if_draft %}
   <p class="error">
-    Error: The front matter does specify <code>published=true</code>, so this is not a draft document.
+    Error: This document was erroneously classified as a draft.
   </p>
 {% else %}
   <p>
-    The front matter specifies <code>published=true</code> and it was properly classified as not being a draft document.
+    This document was properly classified as not a draft.
   </p>
 {% endif_draft %}

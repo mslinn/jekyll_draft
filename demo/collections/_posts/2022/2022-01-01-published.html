@@ -3,12 +3,16 @@ date: 2022-01-01
 layout: minimal
 title: Published Post
 ---
+<p>
+  The front matter does not specify <code>published</code>,
+  so this is not a draft document.
+</p>
 {% if_draft %}
   <p class="error">
-    Error: The front matter does not specify <code>published</code>, so this is not a draft document.
+    Error: This document was erroneously classified as a draft.
   </p>
 {% else %}
   <p>
-    The front matter does not specify <code>published</code> and it was properly classified as not being a draft document.
+    This document was properly classified as not being a draft.
   </p>
 {% endif_draft %}

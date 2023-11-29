@@ -1,27 +1,17 @@
 ---
-date: 2020-12-29
-description: "This document sets <code>published: true</code>."
-last_modified_at: 2022-05-01
 layout: minimal
-order: 0
 published: true
-title: Published Jekyll Document
 ---
 <p>
-  This document sets <code>published: true</code> in front matter.
+  Error: The front matter specifies <code>published=true</code>,
+  so this is not a draft document.
 </p>
-<pre>
-<b>is_draft</b> = {{ page | is_draft }}
-<b>draft_html</b> = {{ page | draft_html }}
-<b>root</b> = {{ page | root: site }}
-</pre>
-
-<h2>page</h2>
-<pre>
-<b>page.title</b>={{page.title}}
-<b>page.data</b>={{page.data}}
-<b>page.draft</b>={{page.draft}}
-<b>page.published</b>={{page.published}}
-<b>page.url</b>={{page.url}}
-<b>page.collection</b>={{page.collection}}
-</pre>
+{% if_draft %}
+  <p class="error">
+    Error: This document was erroneously classified as a draft.
+  </p>
+{% else %}
+  <p>
+    This document was properly classified as not being a draft.
+  </p>
+{% endif_draft %}

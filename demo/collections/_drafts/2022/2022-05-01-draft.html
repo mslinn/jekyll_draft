@@ -4,14 +4,16 @@ date: 2022-05-01
 layout: minimal
 title: Draft Post
 ---
+<p>
+  This blog post is saved in the <code>_drafts/</code> folder,
+  so it should be classified as a draft.
+</p>
 {% if_draft %}
   <p>
-    This blog post is saved in the <code>_drafts/</code> folder,
-    so this is a draft document as was properly classified as such.
+    This document as was properly classified as a draft.
   </p>
 {% else %}
   <p class="error">
-    This blog post is saved in the <code>_drafts/</code> folder,
-    but it was not classified as a draft.
+    This blog post was not classified as a draft.
   </p>
 {% endif_draft %}
