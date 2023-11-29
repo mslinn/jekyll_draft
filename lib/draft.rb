@@ -9,7 +9,7 @@ module Jekyll
     #   - document is in _drafts directory, detectable by doc['draft']==true
     #   - document front matter contains 'published: false'
     def draft?(doc)
-      return doc.draft if doc.respond_to?(:draft)
+      return doc.draft if doc.respond_to? :draft
 
       if doc.respond_to? :data
         return  doc.data['draft']     if doc.data.key? 'draft'
