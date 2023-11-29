@@ -18,7 +18,7 @@ layout: compress
   <title>{{ page.title-override | default: page.title | default: page.subtitle }}</title>
   {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
 </head>
-<body id="body">
+<body id="body" style="padding: 1em;">
 <p><code><b>{{page.url}}</b></code></p>
 {% if_draft %}
   <div class="watermarked">

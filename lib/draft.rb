@@ -10,10 +10,10 @@ module Draft
 
     return false unless doc.respond_to?(:hash_for_json)
 
-    hash = doc.entries # FIXME: might cause infinite recursion
+    # hash = doc.entries # FIXME: might cause infinite recursion
 
-    return hash['draft'] if hash.key?('draft') && hash['draft']
-    return hash['published'] if hash.key?('published') && hash['published']
+    # return hash['draft'] if hash.key?('draft') && hash['draft']
+    # return hash['published'] if hash.key?('published') && hash['published']
 
     false
   rescue StandardError => e
