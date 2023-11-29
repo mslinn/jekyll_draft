@@ -9,7 +9,7 @@ class JekyllDraft < JekyllSupport::JekyllBlock
     true_value, false_value, extra = content.split(RECORD_SEPARATOR)
     raise DraftError, "Warning: More than one else clause detected" if extra
 
-    Draft.draft?(@page) ? true_value : false_value
+    Jekyll::Draft.draft?(@page) ? true_value : false_value
   end
 
   JekyllPluginHelper.register(self, PLUGIN_NAME)

@@ -2,10 +2,10 @@ require 'jekyll_plugin_support'
 
 class Else < JekyllSupport::JekyllTag
   VERSION = '0.1.0'.freeze
-  PLUGIN_NAME = 'else_if_not_draft'.freeze
+  PLUGIN_NAME = 'draft_html'.freeze
 
   def render_impl
-    RECORD_SEPARATOR
+    " <i class='jekyll_draft'>Draft</i>" if Jekyll::Draft.draft?(@page)
   end
 
   JekyllPluginHelper.register(self, PLUGIN_NAME)

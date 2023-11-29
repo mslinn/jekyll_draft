@@ -39,7 +39,7 @@ layout: compress
           <div class="watermarked">
             {{ content }}
           </div>
-        {% else %}
+        {% else_if_not_draft %}
           {{ content }}
         {% endif_draft %}
 

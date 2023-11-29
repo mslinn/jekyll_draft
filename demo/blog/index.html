@@ -8,7 +8,7 @@ subtitle: Unspecified Published Setting
   <p class="error">
     Error: The front matter does not specify <code>published</code>, so this is not a draft document.
   </p>
-{% else %}
+{% else_if_not_draft %}
   <p>
     The front matter does not specify <code>published</code> and it was properly classified as not being a draft document.
   </p>

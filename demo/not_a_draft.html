@@ -9,7 +9,7 @@ layout: minimal
   <p class="error">
     Error: this document was erroneously classified as a draft.
   </p>
-{% else %}
+{% else_if_not_draft %}
   <p>
     This is document was properly classified as not a draft.
   </p>

@@ -1,6 +1,7 @@
 # jekyll_draft [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 
-This is a Jekyll plugin that provides two Liquid filters: `is_draft` and `draft_html`.
+This is a Jekyll plugin that provides 3 Jekyll plugins:
+`if_draft`, `else_if_not_draft` and `draft_html`.
 
 More information is available on my website about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html#draft).
 
@@ -38,7 +39,7 @@ $ bundle
 
 ### `is_draft`
 
-This filter detects if a page is invisible when published in  `production` mode,
+This filter detects if a page is invisible when published in `production` mode,
 and either returns `true` or `false`.
 
 ```html
