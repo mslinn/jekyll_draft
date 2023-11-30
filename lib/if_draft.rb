@@ -1,6 +1,6 @@
 require 'jekyll_plugin_support'
 
-# Jekyll bloct tag that detects draft documents
+# Jekyll block tags that detect draft documents
 class JekyllDraft < JekyllSupport::JekyllBlock
   PLUGIN_NAME1 = 'if_draft'.freeze
   PLUGIN_NAME2 = 'unless_draft'.freeze

@@ -80,7 +80,7 @@ an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming 
 ```html
 {% unless_draft %}
   <p>This is a draft document!</p>
-{% endif_draft %}
+{% endunless_draft %}
 ```
 
 ```html
@@ -88,7 +88,7 @@ an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming 
   <p>This is not a draft document!</p>
 {% else_if_draft %}
   <p>This is a draft document!</p>
-{% endif_draft %}
+{% endunless_draft %}
 ```
 
 You can use `else_if_draft` and `else_if_not_draft` interchangeably.

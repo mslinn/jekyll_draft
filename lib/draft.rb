@@ -12,12 +12,12 @@ module Jekyll
       return doc.draft if doc.respond_to? :draft
 
       if doc.respond_to? :data
-        return  doc.data['draft']     if doc.data.key? 'draft'
         return !doc.data['published'] if doc.data.key? 'published'
+        return  doc.data['draft']     if doc.data.key? 'draft'
       end
       if doc.respond_to? :[]
-        return  doc['draft']     if doc.key? 'draft'
         return !doc['published'] if doc.key? 'published'
+        return  doc['draft']     if doc.key? 'draft'
       end
 
       false
