@@ -143,14 +143,16 @@ table, th, td {
   padding-top: 0.5em;
 }
 
-.error {
-  color: red;
+.draft_filter {
+  border: thin darkgray solid;
+  border-radius: 4pt;
+  color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 3pt;
 }
 
-.example {
-  background-color: light-green;
-  border: thin lightgray solid;
-  padding: 5px;
+.error {
+  color: red;
 }
 
 .fullsize {
@@ -161,6 +163,11 @@ table, th, td {
   margin: 0 auto;
   position: relative;
   width: 90%;
+}
+
+.left {
+  float: left;
+  margin-right: 1em;
 }
 
 .not_draft {

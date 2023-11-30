@@ -19,8 +19,9 @@ layout: compress
   {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
 </head>
 <body id="body" style="padding: 1em;">
-  {% draft_html class="right" published_output="<div class='not_draft right'>Not a draft</div>" %}
-  <p><code><b>{{page.url}}</b></code></p>
+  <div class="left draft_filter"><code>draft_html</code> filter: {{ page | draft_html }}</div>
+  <div class="right draft_filter"><code>draft_html</code> tag: {% draft_html class="right" published_output="<div class='not_draft right'><code>draft_html</code> tag: Not a draft</div>" %}</div>
+  <p class="clear"><code><b>{{page.url}}</b></code></p>
   {% if_draft %}
     <div class="watermarked">
       {{ content }}
