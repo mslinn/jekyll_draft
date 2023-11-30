@@ -26,7 +26,7 @@
       "showProtocolLog": true
     },
     {
-      "debugPort": "0",
+      "debugPort": "45409",
       "name": "Attach rdbg",
       "request": "attach",
       "type": "rdbg",
