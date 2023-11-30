@@ -1,18 +1,20 @@
 # jekyll_draft [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 
-This is a Jekyll plugin that provides several things:
+This is a Jekyll plugin that provides the following:
 
-* Jekyll block tags `if_draft` and `unless_draft`.
-* Jekyll inline tags `else_if_not_draft` and `else_if_draft`, meant for use within `if_draft` and `unless_draft`, respectively.
-  Both of these tags are identical; they are both provided so usage seems natural.
-* Jekyll inline tag `draft_html` that generates HTML that indicates if the document it is embedded within is a draft.
-* Filters:
-  * `is_draft`, a Liquid filter that returns a boolean indicating if the document passed to it is a draft.
-  * `draft_html`, a Liquid filter that returns the same string the `draft_html` tag returns,
+* Jekyll block tags: `if_draft` and `unless_draft`.
+* Jekyll inline tags: `else_if_not_draft` and `else_if_draft`.
+  These are meant for use within `if_draft` and `unless_draft`, respectively.
+  Both of them are identical; they are both provided so usage seems natural.
+* Jekyll inline tag: `draft_html`.
+  It generates HTML that indicates if the document it is embedded within is a draft.
+* Liquid filters:
+  * `is_draft` returns a boolean indicating if the document passed to it is a draft.
+  * `draft_html` returns the same string the `draft_html` tag returns,
     indicating if the document passed to it is a draft.
 * Module `Jekyll::Draft` defines an API with the following methods:
-  * `draft?`, returns a boolean indicating if the document passed to it is a draft.
-  * `draft_html`, returns the same string the `draft_html` tag returns,
+  * `draft?` returns a boolean indicating if the document passed to it is a draft.
+  * `draft_html` returns the same string the `draft_html` tag returns,
     indicating if the document passed to it is a draft.
 
 The difference between the tag called `draft_html` and the filter of the same name
