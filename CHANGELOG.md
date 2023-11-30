@@ -1,9 +1,24 @@
 # Change Log
 
+## 2.0.1 / 2023-11-30
+
+* Jekyll block tags: `if_draft` and `unless_draft`.
+* Jekyll inline tags: `else_if_not_draft` and `else_if_draft`.
+* Jekyll inline tag `draft_html`.
+* Liquid filters:
+  * `is_draft`
+  * `draft_html`
+* Module `Jekyll::Draft` defines an API with the following methods:
+  * `draft?` returns a boolean indicating if the document passed to it is a draft.
+  * `draft_html` returns the same string the `draft_html` tag returns,
+    indicating if the document passed to it is a draft.
+
+
 ## 2.0.0 / 2023-11-29
 
-* Made into a Jekyll block tag, because the filter implementation had problems with infinite recursing Jekyll exerpts.
-  This was a complete rewrite, incompatible with previous version.
+* This version was published prematurely by accident.
+  It is broken, do not use it.
+* This is a complete rewrite, incompatible with previous versions.
 
 
 ## 1.1.2 / 2023-02-25
