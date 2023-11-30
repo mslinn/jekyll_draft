@@ -1,0 +1,16 @@
+---
+description: Jekyll draft plugin demo
+layout: minimal
+---
+<p>
+  This is document is not in a collection, and is not a draft.
+</p>
+{% unless_draft %}
+  <p>
+    This is document was properly classified as not a draft.
+  </p>
+{% else_if_draft %}
+  <p class="error">
+    Error: this document was erroneously classified as a draft.
+  </p>
+{% endif_draft %}

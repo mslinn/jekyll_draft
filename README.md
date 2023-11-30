@@ -1,34 +1,53 @@
 # jekyll_draft [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 
-This is a Jekyll plugin that provides 3 Jekyll plugins:
-`if_draft`, `else_if_not_draft` and `draft_html`.
+This is a Jekyll plugin that provides several things:
 
-More information is available on my website about [my Jekyll plugins](https://www.mslinn.com/blog/2020/10/03/jekyll-plugins.html#draft).
+* `if_draft` and `unless_draft`, a Jekyll block tag.
+* `else_if_not_draft` and `else_if_draft`, two Jekyll inline tags meant for use within `if_draft` and `unless_draft`, respectively.
+  Both of these tags are identical, both are provided so usage seems natural.
+* `draft_html`, a Jekyll inline tag that generates HTML that shows when the current document is a draft.
+* Filters:
+  * `is_draft`, a Liquid filter that returns a boolean indicating if the document passed to it is a draft.
+  * `draft_html`, a Liquid filter that returns the same string the `draft_html` tag returns,
+    indicating if the document passed to it is a draft.
+
+The difference between the tag called `draft_html` and the filter of the same name
+is that the tag only works on the current document,
+while the filter works on the document passed to it.
+
+More information is available on [my website](https://www.mslinn.com/jekyll_plugins/jekyll_draft.html).
 
 
 ## Installation
 
-Add the following to your CSS:
+### For Use In A Jekyll Website
 
-```css
-.jekyll_draft {
-  background-color: #fefeab;
-  padding-bottom: 2px;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  padding-top: 2px;
-}
-```
+Add the CSS found in [`demo/assets/css/jekyll_draft.css`](demo/assets/css/jekyll_draft.css) to your Jekyll layouts.
 
-Add this line to your Jekyll website's `Gemfile`, within the `jekyll_plugins` group:
+Add the following to your Jekyll website's `Gemfile`, within the `jekyll_plugins` group:
 
 ```ruby
 group :jekyll_plugins do
-  gem 'jekyll_draft'
+  gem 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
 end
 ```
 
-And then execute:
+And then type:
+
+```shell
+$ bundle
+```
+
+
+### For Use In a Gem
+
+Add the following to your gem&rsquo;s `.gemspec`:
+
+```ruby
+spec.add_dependency 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
+```
+
+And then type:
 
 ```shell
 $ bundle
@@ -37,7 +56,49 @@ $ bundle
 
 ## Usage
 
-### `is_draft`
+### `if_draft` and `unless_draft` Block Tags
+
+The `if_draft` block tag acts as an if-then or an if-then-else programming construct.
+
+```html
+{% if_draft %}
+  <p>This is a draft document!</p>
+{% endif_draft %}
+```
+
+```html
+{% if_draft %}
+  <p>This is a draft document!</p>
+{% else_if_not_draft %}
+  <p>This is not a draft document!</p>
+{% endif_draft %}
+```
+
+The `unless_draft` block tag acts as a Ruby [unless-then](https://rubystyle.guide/#unless-for-negatives) or
+an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming construct.
+
+```html
+{% unless_draft %}
+  <p>This is a draft document!</p>
+{% endif_draft %}
+```
+
+```html
+{% unless_draft %}
+  <p>This is not a draft document!</p>
+{% else_if_draft %}
+  <p>This is a draft document!</p>
+{% endif_draft %}
+```
+
+You can use `else_if_draft` and `else_if_not_draft` interchangeably.
+They are actually made by registering the same code twice under different names.
+Use the one that makes better sense to you.
+
+
+### Filters
+
+#### `is_draft`
 
 This filter detects if a page is invisible when published in `production` mode,
 and either returns `true` or `false`.
@@ -46,7 +107,7 @@ and either returns `true` or `false`.
 {{ page | is_draft }} => true
 ```
 
-### `draft_html`
+#### `draft_html`
 
 This filter generates HTML to display if a page is invisible when published in `production` mode.
 If the page is not a draft then the empty string is returned.
@@ -71,7 +132,7 @@ draft = Jekyll::Draft.draft_html post
 
 ## Demo
 
-The [`demo`](./demo) directory contains a demonstration website, which uses the plugin.
+The [`demo/`](demo) directory contains a demonstration website, which uses the plugin.
 To run, type:
 
 ```console
@@ -83,12 +144,15 @@ Now point your web browser to http://localhost:4444
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Setup
+
+After checking out the repo, run `bin/setup` to install dependencies.
+You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 Install development dependencies like this:
 
 ```shell
-$ BUNDLE_WITH="development" bundle
+$ BUNDLE_WITH=development bundle
 ```
 
 To install this gem onto your local machine, run:
@@ -96,6 +160,8 @@ To install this gem onto your local machine, run:
 ```shell
 $ bundle exec rake install
 ```
+
+### Releasing A New Version
 
 To release a new version,
 
@@ -125,7 +191,7 @@ Fast Debugger (ruby-debug-ide 0.7.3, debase 0.2.4.1, file filtering is supported
 ```
 
 Now attach to the debugger process.
-This git repo includes a [Visual Studio Code launcher](./.vscode/launch.json) for this purpose labeled `Listen for rdebug-ide`.
+This git repo includes a [Visual Studio Code launcher](.vscode/launch.json) for this purpose labeled `Attach rdbg`.
 
 Now point your web browser to http://localhost:4444
 
