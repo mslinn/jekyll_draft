@@ -13,5 +13,4 @@ module Jekyll
     end
   end
   Liquid::Template.register_filter(DraftFilter)
-  PluginMetaLogger.instance.info { 'Loaded DraftFilter plugin.' }
 end

@@ -10,5 +10,7 @@ RECORD_SEPARATOR = "\u{241E}".freeze
 DraftError = JekyllSupport.define_error
 
 require_relative 'draft'
-require_relative 'else'
 require_relative 'if_draft'
+require_relative 'else'
+require_relative 'draft_html'
+require_relative 'filters'

@@ -19,13 +19,14 @@ layout: compress
   {% if page.keywords %}<meta name="keywords" content="{{page.keywords}}">{% endif %}
 </head>
 <body id="body" style="padding: 1em;">
-<p><code><b>{{page.url}}</b></code></p>
-{% if_draft %}
-  <div class="watermarked">
+  {% draft_html class="right" published_output="<div class='not_draft right'>Not a draft</div>" %}
+  <p><code><b>{{page.url}}</b></code></p>
+  {% if_draft %}
+    <div class="watermarked">
+      {{ content }}
+    </div>
+  {% else_if_not_draft %}
     {{ content }}
-  </div>
-{% else_if_not_draft %}
-  {{ content }}
-{% endif_draft %}
+  {% endif_draft %}
 </body>
 </html>

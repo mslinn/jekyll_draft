@@ -1,15 +1,19 @@
 require 'jekyll_plugin_support'
 
-class Else < JekyllSupport::JekyllTag
+class ElseBase < JekyllSupport::JekyllTag
   VERSION = '0.1.0'.freeze
-  PLUGIN_NAME1 = 'else_if_draft'.freeze
-  PLUGIN_NAME2 = 'else_if_not_draft'.freeze
+  ELSE_DRAFT = 'else_if_draft'.freeze
+  ELSE_NOT_DRAFT = 'else_if_not_draft'.freeze
 
   def render_impl
     RECORD_SEPARATOR
   end
+end
 
-  JekyllPluginHelper.register(self, PLUGIN_NAME1)
-  JekyllPluginHelper.register(self, PLUGIN_NAME2)
-  PluginMetaLogger.instance.info { "Loaded #{PLUGIN_NAME1.class} and #{PLUGIN_NAME2.class}, v#{DraftVersion::VERSION} plugin." }
+class ElseDraft < ElseBase
+  JekyllPluginHelper.register(self, ELSE_DRAFT)
+end
+
+class ElseNotDraft < ElseBase
+  JekyllPluginHelper.register(self, ELSE_NOT_DRAFT)
 end

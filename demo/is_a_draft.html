@@ -3,7 +3,6 @@ description: Jekyll draft plugin demo
 layout: minimal
 published: false
 ---
-{% draft_html %}
 <p>
   This is document is not in a collection and has <code>published: false</code> in the front matter.
 </p>
@@ -12,6 +11,7 @@ published: false
     This document was properly classified as a draft.
   </p>
 {% else_if_not_draft %}
+  {% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
   <p class="error">
     Error: this document was not classified as a draft.
   </p>
