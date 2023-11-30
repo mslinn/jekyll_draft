@@ -107,9 +107,61 @@ Use the one that makes better sense to you.
 
 ### `draft_html` Inline Tag
 
+Here is an example of embedding the `draft_html` inline tag into an HTML document:
+
 ```html
   <p>Is this a draft document? Look here to see: {% draft_html %}</p>
 ```
+
+By default, `draft_html` emits ` <i class='jekyll_draft>Draft</i>` if the document is a draft,
+otherwise it does not emit anything.
+
+You can change this behavior several ways:
+
+* Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft.
+
+  ```html
+  {% draft_html published_output="<p>Not a draft</p>" %}
+  ```
+
+* Add the `draft_output` parameter to specify the HTML that should be emitted if the document is a draft:
+
+  ```html
+  {% draft_html
+    draft_output="<p>Is a draft</p>"
+  %}
+  {% draft_html
+    draft_output="<p>Is a draft</p>"
+    published_output="<p>Not a draft</p>"
+  %}
+  ```
+
+* Add the `draft_class` parameter to specify the CSS class that should be added
+  to the emitted HTML if the document is a draft:
+
+  ```html
+  {% draft_html draft_class="my_draft_class" %}
+  {% draft_html
+    draft_class="my_draft_class"
+    published_output="<p>Not a draft</p>"
+  %}
+  ```
+
+* Add the `draft_style` parameter to specify the CSS class that should be added
+  to the emitted HTML if the document is a draft:
+
+  ```html
+  {% draft_html draft_style="font-size: 24pt;" %}
+  {% draft_html
+    draft_class="my_draft_class"
+    draft_style="font-size: 24pt;"
+  %}
+  {% draft_html
+    draft_class="my_draft_class"
+    draft_style="font-size: 24pt;"
+    published_output="<p>Not a draft</p>"
+  %}
+  ```
 
 
 ### Filters
@@ -134,6 +186,9 @@ The generated HTML for draft pages is:<br>
 ```html
 {{ page | draft_html }} => " <i class='jekyll_draft'>Draft</i>"
 ```
+
+The optional parameters for the `draft_html` inline tag are not available for
+use with the `draft_html` filter.
 
 
 ### Invoking From Another Jekyll Plugin
