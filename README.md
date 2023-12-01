@@ -22,15 +22,14 @@ is that the tag only works on the document that it is embedded in,
 while the filter works on any document passed to it.
 Both the tag and the filter call the API defined in the `Jekyll::Draft` module.
 
-See the [demo](demo) subdirectory for working examples that you can play with.
-
 More information is available on [my website](https://www.mslinn.com/jekyll_plugins/jekyll_draft.html).
 
 
 ## Demo
 
-The [`demo/`](demo) directory contains a demonstration website, which uses the plugin.
-To run, type:
+The [demo](demo) subdirectory has working examples of this Jekyll plugin's functionality
+in a demonstration website.
+To run the demo, type:
 
 ```console
 $ demo/_bin/debug -r
@@ -40,6 +39,14 @@ Now point your web browser to http://localhost:4444.
 You should see:
 
 ![jekyll_draft demo](jekyll_draft_demo.png)
+
+When the demonstration is running, any time you modify the <code>.html</code> files,
+the demo website will regenerate.
+Each time you make a change, the website instantly regenerates.
+This helps the learning experience.
+
+Please play with the contents of the <code>.html</code> files,
+so you can learn how to write Jekyll pages that include this functionality.
 
 
 ## Installation
@@ -115,9 +122,9 @@ an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming 
 {% endunless_draft %}
 ```
 
-You can use `else_if_draft` and `else_if_not_draft` interchangeably.
-They are actually made by registering the same code twice under different names.
-Use the one that makes better sense to you.
+You can use the keywords `else_if_draft` and `else_if_not_draft` interchangeably.
+They are actually made by registering the same code twice with different subclass names.
+Use the keyword that makes the most sense to you.
 
 
 ### `draft_html` Inline Tag
@@ -134,6 +141,7 @@ otherwise it does not emit anything.
 You can change this behavior several ways:
 
 * Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft.
+The default message will continue to be output for draft documents when the `published_output` parameter is used.
 
   ```html
   {% draft_html published_output="<p>Not a draft</p>" %}
