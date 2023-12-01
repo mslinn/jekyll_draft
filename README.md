@@ -16,6 +16,7 @@ This Jekyll plugin provides the following:
   * `draft?` returns a boolean indicating if the document passed to it is a draft.
   * `draft_html` returns the same string that `draft_html` tag returns;
     the response indicates if the document passed to it is a draft.
+  * `root` returns the path to the root of the collection that the document passed to it is a member of
 
 The difference between the tag called `draft_html` and the filter of the same name
 is that the tag only works on the document that it is embedded in,

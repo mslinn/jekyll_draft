@@ -37,6 +37,18 @@ module Jekyll
       ''
     end
 
-    module_function :draft?, :draft_html
+    # @return path to root of the collection that doc is a member of
+    def root(doc, site)
+      return '/index.html' unless doc.respond_to?(:collection)
+
+      collection_name = doc.collection
+      docs = site.key?(collection_name) ? site[collection_name] : site.collections[collection_name].docs
+      index = docs.find { |d| d.url.end_with? 'index.html' }
+      return index.url if index
+
+      docs.min.url
+    end
+
+    module_function :draft?, :draft_html, :root
   end
 end

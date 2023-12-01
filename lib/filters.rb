@@ -11,6 +11,11 @@ module Jekyll
     def draft_html(doc)
       Draft.draft_html doc
     end
+
+    def root(doc, site)
+      Draft.root(doc, site)
+    end
   end
+
   Liquid::Template.register_filter(DraftFilter)
 end
