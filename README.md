@@ -14,15 +14,15 @@ This Jekyll plugin provides the following:
 * Module `Jekyll::Draft` defines an API that your plugin can call.
   It has the following methods:
   * `draft?` returns a boolean indicating if the document passed to it is a draft.
-  * `draft_html` returns the same string the `draft_html` tag returns,
-    indicating if the document passed to it is a draft.
+  * `draft_html` returns the same string that `draft_html` tag returns;
+    the response indicates if the document passed to it is a draft.
 
 The difference between the tag called `draft_html` and the filter of the same name
 is that the tag only works on the document that it is embedded in,
 while the filter works on any document passed to it.
-Both the tag and the filter call the API defined in the `Jekyll::Draft` module.
+Both the tag and the filter call the same API methods defined in the `Jekyll::Draft` module.
 
-More information is available on [my website](https://www.mslinn.com/jekyll_plugins/jekyll_draft.html).
+More information is available on [Mike Slinn&rsquo;s website](https://www.mslinn.com/jekyll_plugins/jekyll_draft.html).
 
 
 ## Demo
