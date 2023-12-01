@@ -3,6 +3,19 @@ description: Jekyll draft plugin demo
 layout: default
 title: Comprehensive Tests
 ---
+<h2 id="how">Please Ensure</h2>
+
+<ol>
+  <li>
+    The highlight colors in the left column below are green,
+    and the highlight colors in the right column below are yellow.
+  </li>
+  <li>
+    No red highlighted messages appear on this page anywhere.
+  </li>
+</ol>
+
+
 <table class="fullsize table">
   <tr style="font-family: Arial, Helvetica, sans-serif; font-size:large" class="dark">
     <th>These should NOT be drafts</th>
@@ -57,3 +70,14 @@ title: Comprehensive Tests
     </td>
   </tr>
 </table>
+
+<h2 id="ex">Technical Explanation</h2>
+<p>
+  Each cell in the above table is produced by including the named Jekyll pages.
+  For example, the top-left cell contains the contents of
+  <a href='not_a_draft.html'><code>not_a_draft.html</code></a>.
+</p>
+<p>
+  All the included Jekyll pages use the Jekyll layout in <code>_layouts/minimal.html</code>,
+  and the stylesheets in <code>demo/assets/css/</code>.
+</p>

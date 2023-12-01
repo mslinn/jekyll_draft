@@ -10,6 +10,7 @@ group :jekyll_plugins do
   gem 'jekyll-assets'
   gem 'jekyll_draft', path: "../"
   gem 'jekyll-environment-variables'
+  gem 'jekyll_href'
   gem 'jekyll_plugin_logger'
   gem 'jekyll_pre'
   gem 'jekyll-sort'
