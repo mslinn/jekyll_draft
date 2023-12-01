@@ -27,6 +27,21 @@ See the [demo](demo) subdirectory for working examples that you can play with.
 More information is available on [my website](https://www.mslinn.com/jekyll_plugins/jekyll_draft.html).
 
 
+## Demo
+
+The [`demo/`](demo) directory contains a demonstration website, which uses the plugin.
+To run, type:
+
+```console
+$ demo/_bin/debug -r
+```
+
+Now point your web browser to http://localhost:4444.
+You should see:
+
+![jekyll_draft demo](jekyll_draft_demo.png)
+
+
 ## Installation
 
 ### For Use In A Jekyll Website
@@ -201,17 +216,6 @@ puts 'Found a draft' if Jekyll::Draft.is_draft post
 draft = Jekyll::Draft.draft_html post
 ```
 
-
-## Demo
-
-The [`demo/`](demo) directory contains a demonstration website, which uses the plugin.
-To run, type:
-
-```console
-$ demo/_bin/debug -r
-```
-
-Now point your web browser to http://localhost:4444
 
 
 ## Development
