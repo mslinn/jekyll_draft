@@ -1,6 +1,11 @@
 # jekyll_draft [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 
-This Jekyll plugin provides the following:
+Jekyll has various ways of specifying that a page or document is
+visible when the website is published in `production` mode.
+The Jekyll documentation is scattered and incomplete regarding this topic.
+This plugin&rsquo;s filters provide a simple means for marking draft pages in `development` mode.
+
+`Jekyll_draft` provides the following:
 
 * Jekyll block tags: `if_draft` and `unless_draft`.
 * Jekyll inline tags: `else_if_not_draft` and `else_if_draft`.
@@ -32,7 +37,10 @@ More information is available on [Mike Slinn&rsquo;s website](https://www.mslinn
 
 The [demo](demo) subdirectory has working examples of this Jekyll plugin's functionality
 in a demonstration website.
-To run the demo, type:
+It can be used to debug the plugin or it can run freely.
+Please examine the <code>HTML</code> files in the demo to see how the plugin works.
+
+To run the demo freely from the command line, type:
 
 ```console
 $ demo/_bin/debug -r
@@ -56,36 +64,36 @@ so you can learn how to write Jekyll pages that include this functionality.
 
 ### For Use In A Jekyll Website
 
-Add the CSS found in [`demo/assets/css/jekyll_draft.css`](demo/assets/css/jekyll_draft.css) to your Jekyll layout(s).
+1. Add the CSS found in [`demo/assets/css/jekyll_draft.css`](demo/assets/css/jekyll_draft.css) to your Jekyll layout(s).
 
-Add the following to your Jekyll website's `Gemfile`, within the `jekyll_plugins` group:
+2. Add the following to your Jekyll website's `Gemfile`, within the `jekyll_plugins` group:
 
-```ruby
-group :jekyll_plugins do
-  gem 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
-end
-```
+   ```ruby
+   group :jekyll_plugins do
+     gem 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
+   end
+   ```
 
-And then type:
+3. Type:
 
-```shell
-$ bundle
-```
+   ```shell
+   $ bundle
+   ```
 
 
 ### For Use In a Gem
 
-Add the following to your gem&rsquo;s `.gemspec`:
+1. Add the following to your gem&rsquo;s `.gemspec`:
 
-```ruby
-spec.add_dependency 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
-```
+   ```ruby
+   spec.add_dependency 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
+   ```
 
-And then type:
+2. Type:
 
-```shell
-$ bundle
-```
+   ```shell
+   $ bundle
+   ```
 
 
 ## Usage
@@ -94,11 +102,17 @@ $ bundle
 
 The `if_draft` block tag acts as an `if-then` or an `if-then-else` programming construct.
 
+The following generates `<p>This is a draft document!</p>`
+if the document it is embedded in is a draft, and the Jekyll website generation was performed in development mode:
+
 ```html
 {% if_draft %}
   <p>This is a draft document!</p>
 {% endif_draft %}
 ```
+
+The following enhances the previous example by also generating `<p>This is not a draft document!</p>`
+when in production mode:
 
 ```html
 {% if_draft %}
@@ -116,6 +130,8 @@ an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming 
   <p>This is not a draft document!</p>
 {% endunless_draft %}
 ```
+
+This is how you can specify an `else` clause for `unless_draft`:
 
 ```html
 {% unless_draft %}
@@ -139,18 +155,21 @@ Here is an example of embedding the `draft_html` inline tag into an HTML documen
 ```
 
 By default, `draft_html` emits ` <i class='jekyll_draft>Draft</i>` if the document is a draft,
+and the Jekyll website generation was performed in development mode,
 otherwise it does not emit anything.
 
 You can change this behavior several ways:
 
-* Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft.
+* Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft,
+and the Jekyll website generation was performed in development mode.
 The default message will continue to be output for draft documents when the `published_output` parameter is used.
 
   ```html
   {% draft_html published_output="<p>Not a draft</p>" %}
   ```
 
-* Add the `draft_output` parameter to specify the HTML that should be emitted if the document is a draft:
+* Add the `draft_output` parameter to specify the HTML that should be emitted if the document is a draft,
+and the Jekyll website generation was performed in development mode:
 
   ```html
   {% draft_html
@@ -163,7 +182,8 @@ The default message will continue to be output for draft documents when the `pub
   ```
 
 * Add the `draft_class` parameter to specify the CSS class that should be added
-  to the emitted HTML if the document is a draft:
+  to the emitted HTML if the document is a draft,
+  and the Jekyll website generation was performed in development mode:
 
   ```html
   {% draft_html draft_class="my_draft_class" %}
@@ -174,7 +194,8 @@ The default message will continue to be output for draft documents when the `pub
   ```
 
 * Add the `draft_style` parameter to specify the CSS class that should be added
-  to the emitted HTML if the document is a draft:
+  to the emitted HTML if the document is a draft,
+  and the Jekyll website generation was performed in development mode:
 
   ```html
   {% draft_html draft_style="font-size: 24pt;" %}
@@ -190,7 +211,38 @@ The default message will continue to be output for draft documents when the `pub
   ```
 
 
-### Filters
+### Liquid Filters
+
+#### `draft_html`
+
+By default, the draft_html Liquid filter generates HTML if a page is invisible when published in `production` mode.
+If the page is not a draft then the empty string is returned.
+
+The optional parameters for the `draft_html` inline tag are not available for
+use with the `draft_html` filter.
+
+The default generated HTML for draft pages is:<br>
+`" <i class='jekyll_draft'>Draft</i>"`
+
+Invoke the filter like this:
+
+```html
+{{ page | draft_html }} => " <i class='jekyll_draft'>Draft</i>"
+```
+
+Here is a code snippet that shows the <code>draft_html</code> filter in use:
+
+```html
+{% assign docs = site.myCollection | sort: "order" %}
+<ol id="titles">
+{% for doc in docs %}
+  <li>
+    <a href="{{doc.url}}" class="title">{{doc.title}}</a>{{ doc | draft_html }}
+  </li>
+{% endfor %}
+</ol>
+```
+
 
 #### `is_draft`
 
@@ -198,23 +250,8 @@ This filter detects if a page is invisible when published in `production` mode,
 and either returns `true` or `false`.
 
 ```html
-{{ page | is_draft }} => true
+{{ page | is_draft }} <!-- true for draft documents in development mode -->
 ```
-
-
-#### `draft_html`
-
-This filter generates HTML to display if a page is invisible when published in `production` mode.
-If the page is not a draft then the empty string is returned.
-The generated HTML for draft pages is:<br>
-`" <i class='jekyll_draft'>Draft</i>"`
-
-```html
-{{ page | draft_html }} => " <i class='jekyll_draft'>Draft</i>"
-```
-
-The optional parameters for the `draft_html` inline tag are not available for
-use with the `draft_html` filter.
 
 
 ### Invoking From Another Jekyll Plugin
