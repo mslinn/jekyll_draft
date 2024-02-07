@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.0.1 / 2024-02-07
+
+* Added Jekyll block tags `if_secret` and `unless_secret`.
+* Added Jekyll inline tags: `unless_draft_only`, `else_if_secret` and `else_if_not_secret`.
+* Added Liquid filter: `is_secret`.
+* Added method `draft_only?` and `secret?` to API module `Jekyll::Draft`.
+
+
 ## 2.0.1 / 2023-11-30
 
 * Jekyll block tags: `if_draft` and `unless_draft`.

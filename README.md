@@ -5,25 +5,33 @@ visible when the website is published in `production` mode.
 The Jekyll documentation is scattered and incomplete regarding this topic.
 This plugin&rsquo;s filters provide a simple means for marking draft pages in `development` mode.
 
+A secret document is a special form of a draft document.
+Secrets are always drafts, but not the converse.
+
 `Jekyll_draft` provides the following:
 
 * Jekyll block tags: `if_draft` and `unless_draft`.
-* Jekyll inline tags: `else_if_not_draft` and `else_if_draft`.
-  These are meant for use within `if_draft` and `unless_draft`, respectively.
+* Jekyll block tags: `if_secret` and `unless_secret`.
+* Jekyll inline tags: `else_if_not_draft`, `else_if_draft`, `else_if_not_secret` and `else_if_secret`.
+  These are meant for use within `if_draft`, `unless_draft`, `if_secret` and `unless_secret`, respectively.
   Both of them are identical; they are both provided so usage seems natural.
-* Jekyll inline tag `draft_html`, which generates HTML that indicates if the document it is embedded within is a draft.
+* Jekyll inline tag `draft_html`, which generates HTML that indicates if the document
+  it is embedded within is a draft or a secret.
 * Liquid filters:
   * `is_draft` returns a boolean indicating if the document passed to it is a draft.
+  * `is_secret` returns a boolean indicating if the document passed to it is a secret.
   * `draft_html` returns the same string the `draft_html` tag returns,
     indicating if the document passed to it is a draft.
 * Module `Jekyll::Draft` defines an API that your plugin can call.
   It has the following methods:
-  * `draft?` returns a boolean indicating if the document passed to it is a draft.
+  * `draft?` returns a boolean indicating if the document passed to it is a draft or a secret.
+  * `draft_only?` returns a boolean indicating if the document passed to it is a draft and not a secret.
   * `draft_html` returns the same string that `draft_html` tag returns;
     the response indicates if the document passed to it is a draft.
   * `root` returns the path to the root of the collection that the document passed to it is a member of.
     This method is not functionally related to Jekyll draft documents;
     it should be packaged separately ... maybe one day...
+  * `secret?` returns a boolean indicating if the document passed to it is a draft.
 
 The difference between the tag called `draft_html` and the filter of the same name
 is that the tag only works on the document that it is embedded in,
@@ -31,6 +39,30 @@ while the filter works on any document passed to it.
 Both the tag and the filter call the same API methods defined in the `Jekyll::Draft` module.
 
 More information is available on [Mike Slinn&rsquo;s website](https://www.mslinn.com/jekyll_plugins/jekyll_draft.html).
+
+
+## Front Matter
+
+To mark a blog as a draft, put it in the `_drafts` directory.
+
+To mark any other article as a draft, add the following to its front matter:
+
+```text
+published: false
+```
+
+To mark any article (including blog posts) as a secret, add the following to its front matter:
+
+```text
+secret: true
+```
+
+Secret documents are a type of draft document, so the above implies:
+
+```text
+published: false
+secret: true
+```
 
 
 ## Demo
@@ -98,36 +130,69 @@ so you can learn how to write Jekyll pages that include this functionality.
 
 ## Usage
 
-### `if_draft` and `unless_draft` Block Tags
+### `if_draft`, `unless_draft`, `if_secret` and `unless_secret` Block Tags
 
-The `if_draft` block tag acts as an `if-then` or an `if-then-else` programming construct.
+The `if_draft` and `if_secret` block tags acts as `if-then` or `if-then-else` programming constructs.
 
-The following generates `<p>This is a draft document!</p>`
+The following generates `<p>This is a draft or a secret document!</p>`
 if the document it is embedded in is a draft, and the Jekyll website generation was performed in development mode:
 
 ```html
 {% if_draft %}
+  <p>This is a draft or a secret document!</p>
+{% endif_draft %}
+```
+
+The following generates `<p>This is a draft document!</p>`
+if the document it is embedded in is a draft and not a secret, and the Jekyll website generation was performed in development mode:
+
+```html
+{% if_draft_only %}
   <p>This is a draft document!</p>
 {% endif_draft %}
 ```
 
-The following enhances the previous example by also generating `<p>This is not a draft document!</p>`
+The following generates `<p>This is a secret document!</p>`
+if the document it is embedded in is a secret, and the Jekyll website generation was performed in development mode:
+
+```html
+{% if_secret %}
+  <p>This is a secret document!</p>
+{% endif_draft %}
+```
+
+The following enhances the previous example by also generating `<p>This is not a draft or a secret document!</p>`
 when in production mode:
 
 ```html
 {% if_draft %}
-  <p>This is a draft document!</p>
+  <p>This is a draft or a secret document!</p>
+{% else_if_not_secret %}
+  <p>This is not a secret document, but might be a draft!</p>
 {% else_if_not_draft %}
-  <p>This is not a draft document!</p>
+  <p>This is not a draft or a secret document!</p>
 {% endif_draft %}
 ```
 
-The `unless_draft` block tag acts as a Ruby [unless-then](https://rubystyle.guide/#unless-for-negatives) or
-an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming construct.
+The `unless_draft`, `unless_draft_only` and `unless_secret` block tags acts as Ruby
+[unless-then](https://rubystyle.guide/#unless-for-negatives) or
+an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming constructs.
 
 ```html
 {% unless_draft %}
-  <p>This is not a draft document!</p>
+  <p>This is not a draft or a secret document!</p>
+{% endunless_draft %}
+```
+
+```html
+{% unless_draft_only %}
+  <p>This is not a draft document, but might be a secret!</p>
+{% endunless_draft %}
+```
+
+```html
+{% unless_secret %}
+  <p>This is not a secret document, but might be a draft!</p>
 {% endunless_draft %}
 ```
 
@@ -138,6 +203,18 @@ This is how you can specify an `else` clause for `unless_draft`:
   <p>This is not a draft document!</p>
 {% else_if_draft %}
   <p>This is a draft document!</p>
+{% endunless_draft %}
+```
+
+```html
+{% unless_draft %}
+  <p>This is not a draft document!</p>
+{% else_if_draft %}
+  <p>This is a draft or a secret document!</p>
+{% else_if_draft_only %}
+  <p>This is a draft document!</p>
+{% else_if_secret %}
+  <p>This is a secret document!</p>
 {% endunless_draft %}
 ```
 
@@ -154,21 +231,22 @@ Here is an example of embedding the `draft_html` inline tag into an HTML documen
   <p>Is this a draft document? Look here to see: {% draft_html %}</p>
 ```
 
-By default, `draft_html` emits ` <i class='jekyll_draft>Draft</i>` if the document is a draft,
-and the Jekyll website generation was performed in development mode,
+By default, if the document is a draft or a secret, and the Jekyll website generation was performed in development mode,
+`draft_html` emits ` <i class='jekyll_draft>Draft</i>` or ` <i class='jekyll_secret>Secret</i>` ,
 otherwise it does not emit anything.
 
 You can change this behavior several ways:
 
-* Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft,
+* Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft or a secret,
 and the Jekyll website generation was performed in development mode.
 The default message will continue to be output for draft documents when the `published_output` parameter is used.
 
   ```html
-  {% draft_html published_output="<p>Not a draft</p>" %}
+  {% draft_html published_output="<p>Not a draft or a secret</p>" %}
   ```
 
 * Add the `draft_output` parameter to specify the HTML that should be emitted if the document is a draft,
+the `secret_output` parameter to specify the HTML that should be emitted if the document is a secret,
 and the Jekyll website generation was performed in development mode:
 
   ```html
@@ -179,17 +257,33 @@ and the Jekyll website generation was performed in development mode:
     draft_output="<p>Is a draft</p>"
     published_output="<p>Not a draft</p>"
   %}
+  {% draft_html
+    secret_output="<p>Is a secret</p>"
+  %}
+  {% draft_html
+    draft_output="<p>Is a draft</p>"
+    published_output="<p>Not a draft or a secret</p>"
+    secret_output="<p>Is a secret</p>"
+  %}
   ```
 
 * Add the `draft_class` parameter to specify the CSS class that should be added
   to the emitted HTML if the document is a draft,
+  add the `secret_class` parameter to specify the CSS class that should be added
+  to the emitted HTML if the document is a secret,
   and the Jekyll website generation was performed in development mode:
 
   ```html
   {% draft_html draft_class="my_draft_class" %}
   {% draft_html
     draft_class="my_draft_class"
-    published_output="<p>Not a draft</p>"
+    published_output="<p>Not a draft or a secret</p>"
+  %}
+  {% draft_html draft_class="my_draft_class" secret_class="my_secret_class" %}
+  {% draft_html
+    draft_class="my_draft_class"
+    published_output="<p>Not a draft or a secret</p>"
+    secret_class="my_secret_class"
   %}
   ```
 
@@ -199,14 +293,19 @@ and the Jekyll website generation was performed in development mode:
 
   ```html
   {% draft_html draft_style="font-size: 24pt;" %}
+  {% draft_html secret_style="font-size: 24pt; color: red;" %}
   {% draft_html
     draft_class="my_draft_class"
     draft_style="font-size: 24pt;"
+    secret_class="my_secret_class"
+    secret_style="font-size: 24pt; color: red;"
   %}
   {% draft_html
     draft_class="my_draft_class"
     draft_style="font-size: 24pt;"
-    published_output="<p>Not a draft</p>"
+    published_output="<p>Not a draft or a secret</p>"
+    secret_class="my_secret_class"
+    secret_style="font-size: 24pt; color: red;"
   %}
   ```
 
@@ -224,10 +323,14 @@ use with the `draft_html` filter.
 The default generated HTML for draft pages is:<br>
 `" <i class='jekyll_draft'>Draft</i>"`
 
-Invoke the filter like this:
+The default generated HTML for secret pages is:<br>
+`" <i class='jekyll_secret'>Secret</i>"`
+
+Invoke the filter like the following; the output depends on whether the document is a draft or a secret:
 
 ```html
 {{ page | draft_html }} => " <i class='jekyll_draft'>Draft</i>"
+{{ page | draft_html }} => " <i class='jekyll_secret'>Secret</i>"
 ```
 
 Here is a code snippet that shows the <code>draft_html</code> filter in use:
@@ -250,7 +353,27 @@ This filter detects if a page is invisible when published in `production` mode,
 and either returns `true` or `false`.
 
 ```html
-{{ page | is_draft }} <!-- true for draft documents in development mode -->
+{{ page | is_draft }} <!-- true for draft and secret documents in development mode -->
+```
+
+
+#### `is_draft_only`
+
+This filter detects if a page is invisible when published in `production` mode,
+and either returns `true` or `false`.
+
+```html
+{{ page | is_draft_only }} <!-- true for draft documents in development mode, but not secret documents -->
+```
+
+
+#### `is_secret`
+
+This filter detects if a page is invisible when published in `production` mode,
+and either returns `true` or `false`.
+
+```html
+{{ page | is_secret }} <!-- true for secret documents in development mode, but not draft documents -->
 ```
 
 
@@ -259,9 +382,9 @@ and either returns `true` or `false`.
 ```ruby
 require 'jekyll_draft'
 
-puts 'Found a draft' if Jekyll::Draft.is_draft post
+puts 'Found a draft or a secret' if Jekyll::Draft.is_draft post
 
-draft = Jekyll::Draft.draft_html post
+draft_or_secret = Jekyll::Draft.draft_html post
 ```
 
 
