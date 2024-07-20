@@ -128,7 +128,7 @@ so you can learn how to write Jekyll pages that include this functionality.
    ```
 
 
-## Usage
+## Usage in a Web Page
 
 ### `if_draft`, `unless_draft`, `if_secret` and `unless_secret` Block Tags
 
@@ -387,6 +387,32 @@ puts 'Found a draft or a secret' if Jekyll::Draft.is_draft post
 draft_or_secret = Jekyll::Draft.draft_html post
 ```
 
+
+## Usage in a Plugin
+
+The methods in `lib/draft_html.rb` can be invoked by qualifying them with `Jekyll::Draft`.
+Here is a complete example of a Jekyll Support plugin that displays an indication of whether the page is a draft or not:
+
+```ruby
+require 'jekyll_plugin_support'
+
+module MyPluginTag
+  MyPluginError = JekyllSupport.define_error
+  PLUGIN_NAME = 'my_plugin'.freeze
+  VERSION = '0.1.0'.freeze
+
+  class MyPluginTag < JekyllSupport::JekyllTag
+    def render_impl
+      <<~HEREDOC
+        Draft or not? #{Jekyll::Draft.draft_html(@page)}
+      HEREDOC
+    end
+  end
+end
+
+Liquid::Template.register_tag(MyPluginTag::PLUGIN_NAME, MyPluginTag::MyPluginTag)
+PluginMetaLogger.instance.info { "Loaded #{MyPluginTag::PLUGIN_NAME} v#{MyPluginTag::VERSION} plugin." }
+```
 
 
 ## Development
