@@ -11,9 +11,9 @@ class ElseBase < JekyllSupport::JekyllTag
 end
 
 class ElseDraft < ElseBase
-  JekyllPluginHelper.register(self, ELSE_DRAFT)
+  JekyllSupport::JekyllPluginHelper.register(self, ELSE_DRAFT)
 end
 
 class ElseNotDraft < ElseBase
-  JekyllPluginHelper.register(self, ELSE_NOT_DRAFT)
+  JekyllSupport::JekyllPluginHelper.register(self, ELSE_NOT_DRAFT)
 end

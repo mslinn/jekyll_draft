@@ -19,9 +19,9 @@ class DraftBase < JekyllSupport::JekyllBlock
 end
 
 class IfDraft < DraftBase
-  JekyllPluginHelper.register(self, IF_DRAFT)
+  JekyllSupport::JekyllPluginHelper.register(self, IF_DRAFT)
 end
 
 class UnlessDraft < DraftBase
-  JekyllPluginHelper.register(self, UNLESS_DRAFT)
+  JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT)
 end
