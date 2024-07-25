@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.2 / 2024-07-24
+
+* Compatible with `jekyll_plugin_support` v0.8.7
+
+
 ## 2.0.1 / 2024-02-07
 
 * Added Jekyll block tags `if_secret` and `unless_secret`.

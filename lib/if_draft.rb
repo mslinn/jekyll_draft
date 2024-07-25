@@ -11,17 +11,17 @@ class DraftBase < JekyllSupport::JekyllBlock
     raise DraftError, "Warning: More than one else clause detected" if extra
 
     if @tag_name == IF_DRAFT
-      return Jekyll::Draft.draft?(@page) ? true_value : false_value
+      return ::Jekyll::Draft.draft?(@page) ? true_value : false_value
     end
 
-    Jekyll::Draft.draft?(@page) ? false_value : true_value
+    ::Jekyll::Draft.draft?(@page) ? false_value : true_value
   end
 end
 
 class IfDraft < DraftBase
-  JekyllSupport::JekyllPluginHelper.register(self, IF_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, IF_DRAFT)
 end
 
 class UnlessDraft < DraftBase
-  JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT)
 end

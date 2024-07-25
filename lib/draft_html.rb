@@ -23,5 +23,5 @@ class DraftHtml < JekyllSupport::JekyllTag
     " <i class='jekyll_draft#{dc}'#{ds}>Draft</i>"
   end
 
-  JekyllSupport::JekyllPluginHelper.register(self, DRAFT_HTML)
+  ::JekyllSupport::JekyllPluginHelper.register(self, DRAFT_HTML)
 end
