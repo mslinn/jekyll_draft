@@ -382,7 +382,7 @@ and either returns `true` or `false`.
 ```ruby
 require 'jekyll_draft'
 
-puts 'Found a draft or a secret' if Jekyll::Draft.is_draft post
+puts 'Found a draft or a secret' if Jekyll::Draft.draft? post
 
 draft_or_secret = Jekyll::Draft.draft_html post
 ```
