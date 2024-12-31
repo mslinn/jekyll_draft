@@ -40,6 +40,8 @@ module Jekyll
 
     # @return Jekyll page whose url uniquely contains path_portion
     def page_match(path_portion)
+      return path_portion if path_portion.start_with? 'http'
+
       everything = ::AllCollectionsHooks.all_collections + ::AllCollectionsHooks.site.pages + ::AllCollectionsHooks.site.static_files
       matching_pages = everything.select { |x| x.url.include? path_portion }
       case matching_pages.length
