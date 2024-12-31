@@ -40,18 +40,19 @@ module Jekyll
 
     # @return Jekyll page whose url uniquely contains path_portion
     def page_match(path_portion)
-      matching_pages = ::AllCollectionsHooks.all_collections.select { |x| x.url.include? path_portion }
+      everything = ::AllCollectionsHooks.all_collections + ::AllCollectionsHooks.site.pages + ::AllCollectionsHooks.site.static_files
+      matching_pages = everything.select { |x| x.url.include? path_portion }
       case matching_pages.length
       when 0
         Draft.logger.error do
-          "Error: No page path included the string '#{path_portion}'"
+          "Error: No page or asset path has a url that includes the string '#{path_portion}'"
         end
         exit! 1
       when 1
         matching_pages.first
       else
         Draft.logger.error do
-          "Error: More than one url matched '#{path_portion}':\n  #{matching_pages.map(&:url).join("\n  ")}"
+          "Error: More than one page or asset path has a url that includes the string '#{path_portion}':\n  #{matching_pages.map(&:url).join("\n  ")}"
         end
         exit! 2
       end

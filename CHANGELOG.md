@@ -2,7 +2,7 @@
 
 ## 2.1.0 / 2024-12-30
 
-* Added ability to return a page in any collection whose path uniquely contains
+* Added ability to return a page in any collection, or those not in a collection, whose path uniquely contains
   a string is a draft or not.
   Does not work on pages that are not in a collection.
 
