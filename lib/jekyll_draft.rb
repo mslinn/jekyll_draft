@@ -9,8 +9,15 @@ RECORD_SEPARATOR = "\u{241E}".freeze
 
 DraftError = JekyllSupport.define_error
 
-require_relative 'draft'
-require_relative 'if_draft'
-require_relative 'else'
-require_relative 'draft_html'
-require_relative 'filters'
+# Common code
+require_relative 'jekyll_draft/common/draft_html'
+require_relative 'jekyll_draft/common/else'
+require_relative 'jekyll_draft/common/filters'
+require_relative 'jekyll_draft/common/module_functions'
+
+# Code related to processing other pages
+require_relative 'jekyll_draft/other_page/filters'
+require_relative 'jekyll_draft/other_page/if_draft'
+
+# Code related to processing the containing page
+require_relative 'jekyll_draft/containing_page/if_draft'

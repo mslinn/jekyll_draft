@@ -1,9 +1,6 @@
-require 'jekyll_plugin_logger'
-require 'yaml'
-
-# Jekyll filters that detect draft documents
+# Jekyll filters that detects if the containing page is a draft document
 module Jekyll
-  module DraftFilter
+  module ContainingPageFilters
     def is_draft(doc) # rubocop:disable Naming/PredicateName
       Draft.draft? doc
     end
@@ -17,5 +14,5 @@ module Jekyll
     end
   end
 
-  Liquid::Template.register_filter(DraftFilter)
+  Liquid::Template.register_filter(ContainingPageFilters)
 end

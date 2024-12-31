@@ -3,6 +3,43 @@ description: Jekyll draft plugin demo
 layout: default
 title: Comprehensive Tests
 ---
+<h2>Page Match</h2>
+{% if_page_draft unpublished.html %}
+  <p>
+    This document was properly classified as a draft.
+  </p>
+{% else_if_not_draft %}
+  {% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
+  <p class="error">
+    Error: this document was not classified as a draft.
+  </p>
+{% endif_page_draft %}
+
+{% unless_page_draft i_am_published.html %}
+<p>
+  This document was properly classified as a draft.
+</p>
+{% else_if_not_draft %}
+{% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
+<p class="error">
+  Error: this document was not classified as a draft.
+</p>
+{% endunless_page_draft %}
+
+<p>
+  This should be a draft: {{ "unpublished.html" | page_match_draft_html }}.
+</p>
+<p>
+  This should not be a draft: {{ "i_am_published.html" | page_match_draft_html }}.
+</p>
+{%- comment -%}
+<p>
+  This would blow up because more than one page has this in their path,
+  so I mangled the name: {{ "index.html" | page_match_draft_html }}.
+</p>
+{%- endcomment -%}
+
+
 <h2 id="how">Please Ensure</h2>
 
 <ol>

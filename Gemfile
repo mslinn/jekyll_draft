@@ -3,6 +3,9 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in jekyll_draft.gemspec
 gemspec
 
+gem 'jekyll_all_collections', '>= 0.3.8' # Putting this in gemspec causes a circular dependency
+# If you need jekyll_draft, be sure to always depend on jekyll_all_collections as well
+
 group :test, :development do
   gem 'debug', '>= 1.0.0', require: false
   gem 'pry', require: false

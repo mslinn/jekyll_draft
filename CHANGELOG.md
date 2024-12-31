@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.1.0 / 2024-12-30
+
+* Added ability to return a page in any collection whose path uniquely contains
+  a string is a draft or not.
+  Does not work on pages that are not in a collection.
+
+
 ## 2.0.2 / 2024-07-24
 
 * Compatible with `jekyll_plugin_support` v1.0.0
@@ -7,10 +14,8 @@
 
 ## 2.0.1 / 2024-02-07
 
-* Added Jekyll block tags `if_secret` and `unless_secret`.
-* Added Jekyll inline tags: `unless_draft_only`, `else_if_secret` and `else_if_not_secret`.
-* Added Liquid filter: `is_secret`.
-* Added method `draft_only?` and `secret?` to API module `Jekyll::Draft`.
+* Added Jekyll inline tag: `unless_draft_only`.
+* Added method `draft_only?` to API module `Jekyll::Draft`.
 
 
 ## 2.0.1 / 2023-11-30

@@ -1,11 +1,12 @@
-require 'jekyll_plugin_support'
-
 class DraftHtml < JekyllSupport::JekyllTag
   VERSION = '0.1.0'.freeze
   DRAFT_HTML = 'draft_html'.freeze unless defined? Else::VERSION
 
   def render_impl
-    is_draft = Jekyll::Draft.draft?(@page)
+    path_portion = @helper.parameter_specified? 'path_portion'
+    page = path_portion ? page_match(path_portion) : @page
+
+    is_draft = Jekyll::Draft.draft?(page)
 
     published_output = @helper.parameter_specified? 'published_output'
     return published_output if !is_draft && published_output

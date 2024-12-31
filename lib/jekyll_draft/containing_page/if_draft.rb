@@ -1,5 +1,3 @@
-require 'jekyll_plugin_support'
-
 # Jekyll block tags that detect draft documents
 class DraftBase < JekyllSupport::JekyllBlock
   IF_DRAFT     = 'if_draft'.freeze
