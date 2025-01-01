@@ -10,11 +10,11 @@ module Jekyll
     #   - document is in _drafts directory, detectable by doc['draft']==true
     #   - document front matter contains 'published: false'
     def draft?(doc)
-      if doc.respond_to?(:data) && (doc.data.respond_to? :key?)
+      if doc.respond_to?(:data) && doc.data.respond_to?(:key?)
         return !doc.data['published'] if doc.data.key? 'published'
-        return doc.data['draft'] if doc.data.key? 'draft'
+        return doc.data['draft']      if doc.data.key? 'draft'
       end
-      if doc.respond_to? :[]
+      if doc.respond_to?(:key?)
         return !doc['published'] if doc.key? 'published'
         return  doc['draft']     if doc.key? 'draft'
       end
@@ -23,7 +23,7 @@ module Jekyll
 
       false
     rescue StandardError => e
-      Draft.logger.error { e }
+      Draft.logger.error { e.full_message }
       false
     end
 
