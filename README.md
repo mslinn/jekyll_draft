@@ -76,7 +76,7 @@ so you can learn how to write Jekyll pages that include this functionality.
 
 ## Installation
 
-### For Use In A Jekyll Website
+### Installing In A Jekyll Website
 
 1. Add the CSS found in [`demo/assets/css/jekyll_draft.css`](demo/assets/css/jekyll_draft.css) to your Jekyll layout(s).
 
@@ -85,7 +85,7 @@ so you can learn how to write Jekyll pages that include this functionality.
    ```ruby
    group :jekyll_plugins do
      gem 'jekyll_all_collections', '>= 0.3.8'
-     gem 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
+     gem 'jekyll_draft', '>=2.1.0'
    end
    ```
 
@@ -96,13 +96,13 @@ so you can learn how to write Jekyll pages that include this functionality.
    ```
 
 
-### For Use In a Gem
+### Installing As a Gem Dependency
 
 1. Add the following to your gem&rsquo;s `.gemspec`:
 
    ```ruby
    spec.add_dependency 'jekyll_all_collections', '>= 0.3.8'
-   spec.add_dependency 'jekyll_draft', '>2.0.0' # v2.0.0 was a dud, do not use it
+   spec.add_dependency 'jekyll_draft', '>=2.1.0'
    ```
 
 2. Type:
@@ -114,31 +114,41 @@ so you can learn how to write Jekyll pages that include this functionality.
 
 ## Usage in a Web Page
 
-### `if_draft`, `unless_draft` Block Tags
+This section documents block tags `if_draft`, `if_page_draft`, `unless_draft` and `unless_page_draft`,
+as well as inline tag `draft_html`.
 
-The `if_draft` block tag acts as `if-then` or `if-then-else` programming constructs.
+The `if_draft` and `if_page_draft` block tags act as `if-then` or `if-then-else` programming constructs.
+Draft documents only exist in development mode.
+In production mode, there is no way to programmatically detect if a draft document exists in development mode.
 
-The following generates `<p>This is a draft  document!</p>`
-if the document it is embedded in is a draft, and the Jekyll website generation was performed in development mode:
+Thus, `if_draft` and `if_page_draft` actually mean "if in development mode and the document is a draft".
 
-```html
-{% if_draft %}
-  <p>This is a draft document!</p>
-{% endif_draft %}
-```
+Furthermore, `unless_draft` and `unless_page_draft` actually mean "if in production mode or the document is not a draft".
+These block tags act as Ruby
+[unless-then](https://rubystyle.guide/#unless-for-negatives) or
+an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming constructs.
+
+The `draft_html` inline tag generates HTML that indicates if a page is a draft or not.
+
+
+### `if_draft` and `unless_draft` Block Tags
+
+These tags consider the status of the document that the tag is embedded in.
 
 The following generates `<p>This is a draft document!</p>`
 if the document it is embedded in is a draft,
 and the Jekyll website generation was performed in development mode:
 
 ```html
-{% if_draft_only %}
-  <p>This is a draft document!</p>
+{% if_draft %}
+  <p>This is a draft document.</p>
 {% endif_draft %}
 ```
 
-The following enhances the previous example by also generating `<p>This is not a draft document!</p>`
-when in production mode:
+The following enhances the previous example by generating `<p>This is not a draft document!</p>`
+if the document this code is embedded in is not a draft.
+The message for the else clause is generated for documents that are not drafts,
+regardless of whether Jekyll is in `production` or `development` mode.
 
 ```html
 {% if_draft %}
@@ -148,40 +158,105 @@ when in production mode:
 {% endif_draft %}
 ```
 
-The `unless_draft`, and `unless_draft_only` block tags acts as Ruby
-[unless-then](https://rubystyle.guide/#unless-for-negatives) or
-an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming constructs.
+The `unless_draft` block tag switches the then and else clauses of the `if_draft` block tag.
 
 ```html
 {% unless_draft %}
-  <p>This is not a draft document!</p>
-{% endunless_draft %}
-```
-
-This is how you can specify an `else` clause for `unless_draft`:
-
-```html
-{% unless_draft %}
-  <p>This is not a draft document!</p>
-{% else_if_draft %}
-  <p>This is a draft document!</p>
+  <p><code>This is a draft document!</p>
 {% endunless_draft %}
 ```
 
 ```html
 {% unless_draft %}
-  <p>This is not a draft document!</p>
-{% else_if_draft %}
-  <p>This is a draft document!</p>
+  <p><code>This is a draft document!</p>
+{% else_unless_draft %}
+  <p><code>This is not a draft document!</p>
 {% endunless_draft %}
 ```
 
-You can use the keywords `else_if_draft` and `else_if_not_draft` interchangeably.
+
+### `if_page_draft` and `unless_page_draft` Block Tags
+
+These tags consider the status of the document whose url uniquely includes the specified string.
+
+An error is raised in `development` mode if no page exists whose URL contains the matching string.
+
+The following generates `<p><code>/directory/blah_blah.html</code> is a draft document!</p>`
+if the rendered page with a url that includes the string `blah.html` in is a draft,
+and the Jekyll website generation was performed in development mode,
+and the only page with a matching URL is <code>/directory/blah_blah.html</code>:
+
+```html
+{% if_page_draft blah.html %}
+  <p><code>{{matched_page.url}}</code> is a draft document.</p>
+{% endif_page_draft %}
+```
+
+Notice the reference to a Jekyll variable called `matched_page` in the above example.
+It is set to the Jekyll `Page` whose `url` uniquely matched the string following the `if_page_draft` tag.
+This variable is only defined for `development` mode within the `then` clause of the `if_page_draft` tag,
+and for the `else` clause of the `unless_page_draft` block tag.
+
+You can specify any `Page` attribute with `matched_page`, for example {{matched_page.title}}.
+
+The following generates `<p><code>/directory/blah_blah.html</code> is not a draft document!</p>`
+if the `/directory/blah_blah.html` in is a draft document,
+and the Jekyll website generation was performed in development mode:
+
+```html
+{% unless_page_draft blah.html %}
+  <p><code>{{matched_page.url}}</code> is not a draft document!</p>
+{% endunless_draft %}
+```
+
+The following shows how to specify an `else` clause for `unless_page_draft`.
+Note that the `if_draft` else clause activates in `production` mode regardless of whether a page matches or not,
+so you should not reference `matched_page` in an else clause without testing
+[`jekyll.environment`](https://jekyllrb.com/docs/configuration/environments/).
+Instead, you can reference the match string with `{{path_portion}}`:
+
+```html
+{% if_page_draft blah.html %}
+  <p><code>{{matched_page.url}}</code> is not a draft document!</p>
+{% else_if_page_draft %}
+  {% if jekyll.environment == 'development' %}
+    <p><code>{{matched_page.url}}</code> is not a draft document!</p>
+  {% else %}
+    <p>Production mode cannot detect if <code>{{path_portion}}</code> matches a draft document or not.</p>
+  {% endif %}
+{% endif_page_draft %}
+```
+
+```html
+{% unless_page_draft blah.html %}
+  {% if jekyll.environment == 'development' %}
+    <p>The page whose URL contains <code>{{path_portion}}</code> is not a draft document!</p>
+  {% else %}
+    <p>Production mode cannot detect if <code>{{path_portion}}</code> matches a draft document or not.</p>
+  {% endif %}
+{% else_unless_page_draft %}
+  <p><code>{{matched_page.url}}</code> is a draft document!</p>
+{% endunless_page_draft %}
+```
+
+As with the `if_page_draft` and `unless_page_draft` examples, the above example
+references scoped Jekyll variables called `matched_page` and `path_portion`.
+These variables are only defined within the body of `if_page_draft` and `unless_page_draft` blocks.
+
+
+### Else Clauses
+
+You can use the keywords `else_if_draft`, `else_unless_draft`, `else_if_page_draft`, and `else_unless_page_draft` interchangeably.
 They are actually made by registering the same code twice with different subclass names.
 Use the keyword that makes the most sense to you.
 
 
 ### `draft_html` Inline Tag
+
+#### Default Behavior
+
+The `draft_html` inline tag can return the status of the page it is embedded in, or any other page that exists.
+Recall that draft pages do not exist in `production` mode.
 
 Here is an example of embedding the `draft_html` inline tag into an HTML document:
 
@@ -193,7 +268,34 @@ By default, if the document is a draft, and the Jekyll website generation was pe
 `draft_html` emits ` <i class='jekyll_draft>Draft</i>`,
 otherwise it does not emit anything.
 
-You can change this behavior several ways:
+#### Testing Another Page
+
+The `path_portion` option enables the `draft_html` tag to report on the draft status
+of other pages when Jekyll is in `development` mode.
+By default, an empty string is always returned when in `production` mode.
+
+```html
+<p>
+  Is <code>/directory/blah_blah.html</code> a draft document?
+  Look here to see: {% draft_html path_portion='blah.html' %}
+</p>
+```
+
+It might be desirable to enclose the above in a test for Jekyll mode as follows:
+
+```html
+{% if jekyll.environment == "development" %}
+  <p>
+    Is <code>/directory/blah_blah.html</code> a draft document?
+    Look here to see: {% draft_html path_portion='blah.html' %}
+  </p>
+{% endif %}
+```
+
+
+#### Additional Options
+
+In addition to the `path_portion` option, the following can be also be specified:
 
 * Add the `published_output` parameter to specify the HTML that should be emitted if the document is not a draft,
 and the Jekyll website generation was performed in development mode.
@@ -208,11 +310,11 @@ and the Jekyll website generation was performed in development mode:
 
   ```html
   {% draft_html
-    draft_output="<p>Is a draft</p>"
+       draft_output="<p>Is a draft</p>"
   %}
   {% draft_html
-    draft_output="<p>Is a draft</p>"
-    published_output="<p>Not a draft</p>"
+       draft_output="<p>Is a draft</p>"
+       published_output="<p>Not a draft</p>"
   %}
   ```
 
@@ -223,8 +325,8 @@ and the Jekyll website generation was performed in development mode:
   ```html
   {% draft_html draft_class="my_draft_class" %}
   {% draft_html
-    draft_class="my_draft_class"
-    published_output="<p>Not a draft</p>"
+       draft_class="my_draft_class"
+       published_output="<p>Not a draft</p>"
   %}
   ```
 
@@ -235,13 +337,13 @@ and the Jekyll website generation was performed in development mode:
   ```html
   {% draft_html draft_style="font-size: 24pt;" %}
   {% draft_html
-    draft_class="my_draft_class"
-    draft_style="font-size: 24pt;"
+       draft_class="my_draft_class"
+       draft_style="font-size: 24pt;"
   %}
   {% draft_html
-    draft_class="my_draft_class"
-    draft_style="font-size: 24pt;"
-    published_output="<p>Not a draft</p>"
+       draft_class="my_draft_class"
+       draft_style="font-size: 24pt;"
+       published_output="<p>Not a draft</p>"
   %}
   ```
 

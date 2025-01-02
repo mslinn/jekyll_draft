@@ -42,8 +42,7 @@ module Jekyll
     def page_match(path_portion)
       return path_portion if path_portion.start_with?('http', 'mailto')
 
-      everything = ::AllCollectionsHooks.all_collections + ::AllCollectionsHooks.site.pages + ::AllCollectionsHooks.site.static_files
-      matching_pages = everything.select { |x| x.url.include? path_portion }
+      matching_pages = ::AllCollectionsHooks.everything.select { |x| x.url.include? path_portion }
       case matching_pages.length
       when 0
         Draft.logger.error do
