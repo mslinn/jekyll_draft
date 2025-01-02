@@ -162,15 +162,15 @@ The `unless_draft` block tag switches the then and else clauses of the `if_draft
 
 ```html
 {% unless_draft %}
-  <p><code>This is a draft document!</p>
+  <p><code>This is not a draft document!</p>
 {% endunless_draft %}
 ```
 
 ```html
 {% unless_draft %}
-  <p><code>This is a draft document!</p>
-{% else_unless_draft %}
   <p><code>This is not a draft document!</p>
+{% else_unless_draft %}
+  <p><code>This is a draft document!</p>
 {% endunless_draft %}
 ```
 
@@ -209,7 +209,7 @@ and the Jekyll website generation was performed in development mode:
 {% endunless_draft %}
 ```
 
-The following shows how to specify an `else` clause for `unless_page_draft`.
+The following shows how to specify `else` clauses for `if_page_draft` and `unless_page_draft`.
 Note that the `if_draft` else clause activates in `production` mode regardless of whether a page matches or not,
 so you should not reference `matched_page` in an else clause without testing
 [`jekyll.environment`](https://jekyllrb.com/docs/configuration/environments/).
@@ -217,7 +217,7 @@ Instead, you can reference the match string with `{{path_portion}}`:
 
 ```html
 {% if_page_draft blah.html %}
-  <p><code>{{matched_page.url}}</code> is not a draft document!</p>
+  <p><code>{{matched_page.url}}</code> is a draft document!</p>
 {% else_if_page_draft %}
   {% if jekyll.environment == 'development' %}
     <p><code>{{matched_page.url}}</code> is not a draft document!</p>
@@ -226,6 +226,10 @@ Instead, you can reference the match string with `{{path_portion}}`:
   {% endif %}
 {% endif_page_draft %}
 ```
+
+Similarly, that the `unless_draft` then clause activates in `production` mode regardless of whether a page matches or not,
+so you should not reference `matched_page` in a then clause without testing
+[`jekyll.environment`](https://jekyllrb.com/docs/configuration/environments/).
 
 ```html
 {% unless_page_draft blah.html %}

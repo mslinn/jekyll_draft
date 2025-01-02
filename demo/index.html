@@ -4,25 +4,25 @@ layout: default
 title: Comprehensive Tests
 ---
 <h2>Page Match</h2>
-{% if_page_draft /blog/2022/03/28/test-draft.html %}
+{% if_page_draft /blog/2022/05/01/draft.html %}
   <p>
-    This document was properly classified as a draft.
+    <code><<path_portion>></code>, selected by <code><<matched_page.url>></code>, was properly classified as a draft.
   </p>
 {% else_if_not_draft %}
   {% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
   <p class="error">
-    Error: this document was not classified as a draft.
+    Error: <code><<path_portion>></code>, selected by <code><<matched_page.url>></code>, was not classified as a draft.
   </p>
 {% endif_page_draft %}
 
 {% unless_page_draft i_am_published.html %}
 <p>
-  This document was properly classified as a draft.
+  <code><<path_portion>></code>, selected by <code><<matched_page.url>></code>, was properly classified as a draft.
 </p>
 {% else_if_not_draft %}
 {% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
 <p class="error">
-  Error: this document was not classified as a draft.
+  Error: <code><<path_portion>></code>, selected by <code><<matched_page.url>></code>, was not classified as a draft.
 </p>
 {% endunless_page_draft %}
 
