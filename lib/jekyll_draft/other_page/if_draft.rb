@@ -29,11 +29,11 @@ class DraftPageBase < JekyllSupport::JekyllBlock
   end
 
   def process_variables(markup)
-    path_portion = @path_portion
-    matched_page = @matched_page
+    path_portion = @path_portion # add this to the binding
+    matched_page = @matched_page # add this to the binding
     _ = path_portion == matched_page # Just to keep the lint checker happy
     markup.gsub!(/(<<([^<>]*)>>)/) do
-      token = Regexp.last_match[1] # gsub replaces _token with return value of the block
+      token = Regexp.last_match[1] # gsub replaces token with the return value of this block
       expression = Regexp.last_match[2]
       if expression == 'matched_page'
         @logger.warn do
