@@ -38,9 +38,10 @@ module Jekyll
       ''
     end
 
-    # @return Jekyll page whose url uniquely contains path_portion
+    # @return Jekyll::Page whose url uniquely contains path_portion,
+    #         or `path_portion` as a String for non-local URLs.
     def page_match(path_portion, raise_error_if_no_match: true)
-      return path_portion if path_portion.start_with?('http', 'mailto', '#', '.', '/')
+      return :non_local_url if path_portion.start_with? 'http:', 'https:', 'mailto'
 
       matching_pages = ::AllCollectionsHooks.everything.select { |x| x.url.include? path_portion }
       case matching_pages.length

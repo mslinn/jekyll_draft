@@ -3,6 +3,31 @@ description: Jekyll draft plugin demo
 layout: default
 title: Comprehensive Tests
 ---
+<!-- #region if_draft -->
+<h2 id="if_draft_else">if_draft else clause</h2>
+{% if_draft %}
+<p class="error">
+  Error: this document was erroneously classified as a draft.
+  {% draft_html %}
+</p>
+{% else_if_draft %}
+  <p>
+    This page truly is not a draft.
+  </p>
+{% endif_draft %}
+<!-- endregion -->
+
+
+<!-- #region unless_page_draft -->
+{% assign count = 1 %}
+{% unless_page_draft is_a_draft.html %}
+  {% assign count = count | plus: 1 %}
+  <p>{% href match url='is_a_draft.html' %}</p>
+{% endunless_page_draft %}
+<!-- endregion -->
+
+
+<!-- #region Page Match -->
 <h2>Page Match</h2>
 {% if_page_draft /blog/2022/05/01/draft.html %}
   <p>
@@ -38,10 +63,12 @@ title: Comprehensive Tests
   so I mangled the name: {{ "index.html" | page_match_draft_html }}.
 </p>
 {%- endcomment -%}
+<!-- endregion -->
 
 
+<!-- #region Please Ensure -->
 <h2 id="how">Please Ensure</h2>
-
+<!-- #region implicit -->
 <ol>
   <li>
     The highlight colors in the left column below are green,
@@ -51,8 +78,10 @@ title: Comprehensive Tests
     No red highlighted messages appear on this page anywhere.
   </li>
 </ol>
+<!-- endregion -->
 
 
+<!-- #region table -->
 <table class="fullsize table">
   <tr style="font-family: Arial, Helvetica, sans-serif; font-size:large" class="dark">
     <th>These should NOT be drafts</th>
@@ -107,8 +136,11 @@ title: Comprehensive Tests
     </td>
   </tr>
 </table>
+<!-- endregion -->
 
-<h2 id="ex">Technical Explanation</h2>
+
+<!-- #region Technical Explanation -->
+<h3 id="ex">Technical Explanation</h3>
 <p>
   Each cell in the above table is produced by including <code>iframe</code>s containing the named Jekyll pages.
   For example, the top-left cell contains the contents of
@@ -118,3 +150,5 @@ title: Comprehensive Tests
   All the included Jekyll pages use the Jekyll layout in <code>_layouts/minimal.html</code>,
   and the stylesheets in <code>demo/assets/css/</code>.
 </p>
+<!-- endregion -->
+<!-- endregion -->

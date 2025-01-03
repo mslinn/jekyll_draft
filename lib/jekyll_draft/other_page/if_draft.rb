@@ -16,7 +16,9 @@ class DraftPageBase < JekyllSupport::JekyllBlock
     @path_portion = @argument_string.strip
     raise DraftError, "Error: path_portion was not specified" unless @path_portion
 
-    @matched_page = Jekyll::Draft.page_match @path_portion
+    @matched_page = @path_portion.start_with?('#') ? @page : Jekyll::Draft.page_match(@path_portion)
+    raise DraftError, "Error: path_portion='#{@path_portion}' does not specify a local page." if @matched_page == :non_local_url
+
     is_draft = Jekyll::Draft.draft? @matched_page
     clause_value = if @tag_name == IF_DRAFT
                      is_draft ? true_content : false_content
@@ -29,13 +31,15 @@ class DraftPageBase < JekyllSupport::JekyllBlock
   end
 
   def process_variables(markup)
+    return '' unless markup
+
     path_portion = @path_portion # add this to the binding
     matched_page = @matched_page # add this to the binding
     _ = path_portion == matched_page # Just to keep the lint checker happy
     markup.gsub!(/(<<([^<>]*)>>)/) do
       token = Regexp.last_match[1] # gsub replaces token with the return value of this block
       expression = Regexp.last_match[2]
-      if expression == 'matched_page'
+      if expression == 'matched_page' && matched_page.class != String
         @logger.warn do
           expression = 'matched_page.url'
           <<~END_MSG
