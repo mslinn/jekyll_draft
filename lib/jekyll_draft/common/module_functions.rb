@@ -38,6 +38,9 @@ module Jekyll
       ''
     end
 
+    # This is a computationally intense method, and really slows down site generation.
+    # TODO: implement cache in front of sorted objects containing paths and page reference
+    # This cache is also needed by compute_link_and_text in jekyll_href
     # @return Jekyll::Page whose url uniquely contains path_portion,
     #         or `path_portion` as a String for non-local URLs.
     def page_match(path_portion, raise_error_if_no_match: true)
@@ -46,7 +49,7 @@ module Jekyll
       matching_pages = ::AllCollectionsHooks
         .everything
         .select { |x| x.url.include? path_portion }
-        .reject { |x| x.content.include? '<meta http-equiv="refresh" content="0; url=' } || []
+        .reject { |x| x.path == 'redirect.html' } || []
       case matching_pages.length
       when 0
         return '' unless raise_error_if_no_match
@@ -54,14 +57,14 @@ module Jekyll
         Draft.logger.error do
           "No page or asset path has a url that includes the string '#{path_portion}'"
         end
-        exit! 1
+        exit! 1 # TODO: check config before dieing
       when 1
         matching_pages.first
       else
         Draft.logger.error do
           "More than one page or asset path has a url that includes the string '#{path_portion}':\n  #{matching_pages.map(&:url).join("\n  ")}"
         end
-        exit! 2
+        exit! 2 # The user should fix this problem before allowing the website to generate
       end
     end
 
