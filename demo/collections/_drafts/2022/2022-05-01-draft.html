@@ -2,11 +2,18 @@
 description: Just a draft test post I wrote
 date: 2022-05-01
 layout: minimal
+redirect_from:
+  - /blog/2022/04/05/draft.html
 title: Draft Post
 ---
 <p>
   This blog post is saved in the <code>_drafts/</code> folder,
   so it should be classified as a draft.
+</p>
+<p>
+  It also redirects from <code>/blog/2022/04/05/draft.html</code>,
+  which creates a potential duplicate file name that might cause
+  <code>Jekyll::Draft.page_match</code> to think more than one match was found.
 </p>
 {% if_draft %}
   <p>
