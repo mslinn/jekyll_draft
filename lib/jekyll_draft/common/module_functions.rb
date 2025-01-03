@@ -46,7 +46,7 @@ module Jekyll
       matching_pages = ::AllCollectionsHooks
         .everything
         .select { |x| x.url.include? path_portion }
-        .reject { |x| x.content.include? '<meta http-equiv="refresh" content="0; url=' }
+        .reject { |x| x.content.include? '<meta http-equiv="refresh" content="0; url=' } || []
       case matching_pages.length
       when 0
         return '' unless raise_error_if_no_match
