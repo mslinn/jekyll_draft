@@ -39,7 +39,8 @@ class DraftPageBase < JekyllSupport::JekyllBlock
         @logger.warn do
           expression = 'matched_page.url'
           <<~END_MSG
-            The expression #{token} should have a dot in it, followed by a property name, for example <<matched_page.url>>.
+            The expression #{token} should either specify a property, for example <<matched_page.url>>,
+            or a hash value, for example <<matched_page['title']>>.
             The expression was modified to <<matched_page.url>> for you.
           END_MSG
         end
