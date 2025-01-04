@@ -28,6 +28,7 @@ class DraftPageBase < JekyllSupport::JekyllBlock
     process_variables clause_value
   rescue StandardError => e
     puts e.full_message
+    exit!
   end
 
   def process_variables(markup)
