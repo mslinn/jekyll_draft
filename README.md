@@ -314,36 +314,36 @@ otherwise it does not emit anything.
   ```
 
 * Add the <code>draft_class</code> parameter to specify the CSS class that should be added
-    to the emitted HTML if the document is a draft,
-    and the Jekyll website generation was performed in development mode:
+  to the emitted HTML if the document is a draft,
+  and the Jekyll website generation was performed in development mode:
 
-    ```text
-    {% draft_html draft_class="my_draft_class" %}
+  ```text
+  {% draft_html draft_class="my_draft_class" %}
 
-    {% draft_html
-      draft_class="my_draft_class"
-      published_output="<p>Not a draft</p>"
-    %}
-    ```
+  {% draft_html
+    draft_class="my_draft_class"
+    published_output="<p>Not a draft</p>"
+  %}
+  ```
 
 * Add the <code>draft_style</code> parameter to specify the CSS class that should be added
-    to the emitted HTML if the document is a draft,
-    and the Jekyll website generation was performed in development mode:
+  to the emitted HTML if the document is a draft,
+  and the Jekyll website generation was performed in development mode:
 
-    ```text
-    {% draft_html draft_style="font-size: 24pt;" %}
+  ```text
+  {% draft_html draft_style="font-size: 24pt;" %}
 
-    {% draft_html
-      draft_class="my_draft_class"
-      draft_style="font-size: 24pt;"
-    %}
+  {% draft_html
+    draft_class="my_draft_class"
+    draft_style="font-size: 24pt;"
+  %}
 
-    {% draft_html
-      draft_class="my_draft_class"
-      draft_style="font-size: 24pt;"
-      published_output="<p>Not a draft</p>"
-    %}
-    ```
+  {% draft_html
+    draft_class="my_draft_class"
+    draft_style="font-size: 24pt;"
+    published_output="<p>Not a draft</p>"
+  %}
+  ```
 
 
 #### Testing Another Page
