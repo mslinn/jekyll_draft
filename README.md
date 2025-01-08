@@ -85,7 +85,7 @@ so you can learn how to write Jekyll pages that include this functionality.
 
 ## Installation
 
-### Installing In A Jekyll Website
+### For Use In A Jekyll Website
 
 1. Add the CSS found in [`demo/assets/css/jekyll_draft.css`](demo/assets/css/jekyll_draft.css) to your Jekyll layout(s).
 
@@ -107,7 +107,7 @@ so you can learn how to write Jekyll pages that include this functionality.
 4. Restart Jekyll.
 
 
-### Installing As a Gem Dependency
+### For Use In a Gem
 
 1. Add the following to your gem&rsquo;s `.gemspec`:
 
@@ -287,6 +287,65 @@ By default, if the document is a draft, and the Jekyll website generation was pe
 `draft_html` emits ` <i class='jekyll_draft>Draft</i>`,
 otherwise it does not emit anything.
 
+<p>You can change this behavior several ways:</p>
+
+* Add the <code>draft_output</code> parameter to specify the HTML that should be
+  emitted if the document is a draft,
+  and the Jekyll website generation was performed in development mode:
+
+  ```text
+  {% draft_html
+    draft_output="<p>Is a draft</p>"
+  %}
+
+  {% draft_html
+    draft_output="<p>Is a draft</p>"
+    published_output="<p>Not a draft</p>"
+  %}
+  ```
+
+* Add the <code>published_output</code> parameter to specify the HTML that
+  should be emitted if the document is not a draft.
+  The default message will continue to be output for draft documents when the
+  <code>published_output</code> parameter is used.
+
+  ```text
+  {% draft_html published_output="<p>Not a draft</p>" %}
+  ```
+
+* Add the <code>draft_class</code> parameter to specify the CSS class that should be added
+    to the emitted HTML if the document is a draft,
+    and the Jekyll website generation was performed in development mode:
+
+    ```text
+    {% draft_html draft_class="my_draft_class" %}
+
+    {% draft_html
+      draft_class="my_draft_class"
+      published_output="<p>Not a draft</p>"
+    %}
+    ```
+
+* Add the <code>draft_style</code> parameter to specify the CSS class that should be added
+    to the emitted HTML if the document is a draft,
+    and the Jekyll website generation was performed in development mode:
+
+    ```text
+    {% draft_html draft_style="font-size: 24pt;" %}
+
+    {% draft_html
+      draft_class="my_draft_class"
+      draft_style="font-size: 24pt;"
+    %}
+
+    {% draft_html
+      draft_class="my_draft_class"
+      draft_style="font-size: 24pt;"
+      published_output="<p>Not a draft</p>"
+    %}
+    ```
+
+
 #### Testing Another Page
 
 The `path_portion` option enables the `draft_html` tag to report on the draft status
@@ -400,7 +459,7 @@ Here is a code snippet that shows the <code>draft_html</code> filter in use:
 ```
 
 
-### `page_match_draft_html`
+#### `page_match_draft_html`
 
 This filter detects if the page whose URL uniquely contains a string is
 invisible when published in `production` mode,
@@ -421,7 +480,7 @@ and returns `true` or `false`.
 ```
 
 
-### `page_match_is_draft`
+#### `page_match_is_draft`
 
 This filter detects if the page whose URL uniquely contains a string is
 invisible when published in `production` mode,
@@ -443,7 +502,7 @@ draft = Jekyll::Draft.draft_html post
 ```
 
 
-## Usage in a Plugin
+### Usage in a Plugin
 
 The methods in `lib/draft_html.rb` can be invoked by qualifying them with `Jekyll::Draft`.
 Here is a complete example of a Jekyll Support plugin that displays an indication of whether the page is a draft or not:
