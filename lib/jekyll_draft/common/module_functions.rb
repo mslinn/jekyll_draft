@@ -61,8 +61,8 @@ module Jekyll
       when 1
         matching_pages.first
       else
-        Draft.logger.error do
-          "More than one page or asset path has a url that includes the string '#{path_portion}':\n  #{matching_pages.map(&:url).join("\n  ")}"
+        Draft.logger.error do # :\n  #{matching_pages.map(&:url).join("\n  ")}
+          "More than one page or asset path has a url that includes the string '#{path_portion}'"
         end
         exit! 2 # The user should fix this problem before allowing the website to generate
       end
