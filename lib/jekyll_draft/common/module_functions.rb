@@ -6,6 +6,7 @@ module Jekyll
     end
     Draft.logger = PluginMetaLogger.instance.new_logger(self, PluginMetaLogger.instance.config)
 
+    # @parameter doc [AllCollectionsHooks::APage|Jekyll::Page|Jekyll::Document]
     # @return true by checking in this order:
     #   - document is in _drafts directory, detectable by doc['draft']==true
     #   - document front matter contains 'published: false'

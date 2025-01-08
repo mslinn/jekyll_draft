@@ -8,26 +8,32 @@ This plugin provides standard ways for detecting draft pages and documents.
 `Jekyll_draft` provides the following:
 
 * Jekyll block tags: `if_draft`, `if_page_draft`, `unless_draft`, and `unless_page_draft`.
-* Jekyll inline tags: `else_if_not_draft` and `else_if_draft`.
+* Jekyll inline tags: `else_if_draft`, `else_if_page_draft`,
+  `else_unless_draft` and `else_unless_page_draft`.
   These are meant for use within the above block tags.
-  Both of them are identical; they are both provided so usage seems natural.
+  They are all identical; they are provided so usage seems natural.
 * Jekyll inline tag `draft_html`, which generates HTML that indicates if
   the enclosing document or a specified is a draft.
 * Liquid filters:
   * `is_draft` returns a boolean indicating if the document passed to it is a draft.
-  * `page_match_is_draft` is like `is_draft` but works on other pages.
+  * `page_match_is_draft` is like `is_draft`, but works on other pages.
   * `draft_html` returns the same string the `draft_html` tag returns,
-    indicating if the document passed to it is a draft.
+    indicating if the <code>Jekyll::Page</code> passed to the filter is a draft.
   * `page_match_draft_html` is like `draft_html` but works on other pages.
+    It accepts a string that will be matched against
+    [`APage.href`](https://github.com/mslinn/jekyll_all_collections?tab=readme-ov-file#the-apage-class)
+    values in <code>site.everything</code>.
 * Module `Jekyll::Draft` defines an API that your plugin can call.
   It has the following methods:
-  * `draft?` returns a boolean indicating if the document passed to it is a draft.
-  * `draft_html` returns the same string that `draft_html` tag returns;
-    the response indicates if the document passed to it is a draft.
-  * `page_match` returns the Jekyll page whose url uniquely ends with a string.
+  * `draft?` returns a boolean indicating if the object passed to it is a draft.
+    It handles `AllCollectionsHooks::APage` instances, `Jekyll::Page` instances,
+    and `Jekyll::Document` instances.
+  * `draft_html` accepts the same parameter types as `draft?`,
+    and returns the same string that `draft_html` tag returns.
+    The response indicates if the document passed to it is a draft.
+  * `page_match` returns the `APage` whose `href` uniquely ends with the string passed to it.
   * `root` returns the path to the root of the collection that the document passed to it is a member of.
-    This method is not functionally related to Jekyll draft documents;
-    it should be packaged separately ... maybe one day...
+    This method is not functionally related to Jekyll draft documents.
 
 The difference between the tag called `draft_html` and the filter of the same name
 is that the tag only works on the document that it is embedded in,
@@ -44,13 +50,15 @@ To mark a blog as a draft, put it in the `_drafts` directory.
 To mark any other article as a draft, add the following to its front matter:
 
 ```text
+---
 published: false
+---
 ```
 
 
 ## Demo
 
-The [demo](demo) subdirectory has working examples of this Jekyll plugin's functionality
+The [demo/](demo) subdirectory has working examples of this Jekyll plugin's functionality
 in a demonstration website.
 It can be used to debug the plugin or it can run freely.
 Please examine the <code>HTML</code> files in the demo to see how the plugin works.
@@ -96,6 +104,8 @@ so you can learn how to write Jekyll pages that include this functionality.
    $ bundle
    ```
 
+4. Restart Jekyll.
+
 
 ### Installing As a Gem Dependency
 
@@ -125,8 +135,8 @@ Thus, `if_draft` and `if_page_draft` actually mean "if in development mode and t
 
 Furthermore, `unless_draft` and `unless_page_draft` actually mean "if in production mode or the document is not a draft".
 These block tags act as Ruby
-[unless-then](https://rubystyle.guide/#unless-for-negatives) or
-an [unless-then-else](https://rubystyle.guide/#no-else-with-unless) programming constructs.
+[`unless-then`](https://rubystyle.guide/#unless-for-negatives) and
+[`unless-then-else`](https://rubystyle.guide/#no-else-with-unless) programming constructs.
 
 The `draft_html` inline tag generates HTML that indicates if a page is a draft or not.
 
@@ -134,6 +144,8 @@ The `draft_html` inline tag generates HTML that indicates if a page is a draft o
 ### `if_draft` and `unless_draft` Block Tags
 
 These tags consider the status of the document that the tag is embedded in.
+
+The <code>if_draft</code> block tag acts as an <code>if-then</code> or an <code>if-then-else</code> programming construct.
 
 The following generates `<p>This is a draft document!</p>`
 if the document it is embedded in is a draft,
@@ -159,18 +171,20 @@ regardless of whether Jekyll is in `production` or `development` mode.
 ```
 
 The `unless_draft` block tag switches the then and else clauses of the `if_draft` block tag.
+It acts as a Ruby [<code>unless-then</code>](https://rubystyle.guide/#unless-for-negatives) or
+[<code>unless-then-else</code>](https://rubystyle.guide/#no-else-with-unless) programming construct.
 
 ```html
 {% unless_draft %}
-  <p><code>This is not a draft document!</p>
+  <p>This is not a draft document!</p>
 {% endunless_draft %}
 ```
 
 ```html
 {% unless_draft %}
-  <p><code>This is not a draft document!</p>
+  <p>This is not a draft document!</p>
 {% else_unless_draft %}
-  <p><code>This is a draft document!</p>
+  <p>This is a draft document!</p>
 {% endunless_draft %}
 ```
 
@@ -182,7 +196,7 @@ These tags consider the status of the document whose url uniquely includes the s
 An error is raised in `development` mode if no page exists whose URL contains the matching string.
 
 The following generates `<p><code>/directory/blah_blah.html</code> is a draft document!</p>`
-if the rendered page with a url that includes the string `blah.html` in is a draft,
+if the rendered page with a url that ends with the string `blah.html` in is a draft,
 and the Jekyll website generation was performed in development mode,
 and the only page with a matching URL is <code>/directory/blah_blah.html</code>:
 
@@ -227,7 +241,7 @@ Instead, you can reference the match string with `{{path_portion}}`:
 {% endif_page_draft %}
 ```
 
-Similarly, that the `unless_draft` then clause activates in `production` mode regardless of whether a page matches or not,
+Similarly, the `unless_draft` then clause activates in `production` mode regardless of whether a page matches or not,
 so you should not reference `matched_page` in a then clause without testing
 [`jekyll.environment`](https://jekyllrb.com/docs/configuration/environments/).
 
