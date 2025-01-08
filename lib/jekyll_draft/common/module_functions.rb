@@ -48,7 +48,7 @@ module Jekyll
 
       matching_pages = ::AllCollectionsHooks
         .everything
-        .reject { |x| x.path == 'redirect.html' }
+        .reject { |x| x&.path == 'redirect.html' }
         .map { |x| "#{x}/index.html" if x.path&.end_with? '/' }
         .select { |x| x.path&.end_with? path_portion } || []
       case matching_pages.length
