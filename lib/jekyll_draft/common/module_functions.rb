@@ -49,8 +49,8 @@ module Jekyll
       matching_pages = ::AllCollectionsHooks
         .everything
         .reject { |x| x&.path == 'redirect.html' }
-        .map { |x| "#{x}/index.html" if x.path&.end_with? '/' }
-        .select { |x| x.path&.end_with? path_portion } || []
+        .map { |x| "#{x}/index.html" if x&.path&.end_with? '/' }
+        .select { |x| x&.path&.end_with? path_portion } || []
       case matching_pages.length
       when 0
         return '' unless raise_error_if_no_match
@@ -67,6 +67,8 @@ module Jekyll
         end
         exit! 2 # The user should fix this problem before allowing the website to generate
       end
+    rescue StandardError => e
+      puts e.full_message
     end
 
     # @return path to root of the collection that doc is a member of
