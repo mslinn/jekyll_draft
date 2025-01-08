@@ -1,29 +1,30 @@
 # jekyll_draft [![Gem Version](https://badge.fury.io/rb/jekyll_draft.svg)](https://badge.fury.io/rb/jekyll_draft)
 
-Jekyll has various ways of specifying that a page or document is
+Jekyll has various ways of specifying that a page or document will be
 visible when the website is published in `production` mode.
-The Jekyll documentation is scattered and incomplete regarding this topic.
-This plugin&rsquo;s filters provide a simple means for marking draft pages in `development` mode.
+The Jekyll documentation is scattered and incomplete regarding detecting draft pages and documents.
+This plugin provides standard ways for detecting draft pages and documents.
 
 `Jekyll_draft` provides the following:
 
-* Jekyll block tags: `if_draft` and `unless_draft`.
-* Jekyll inline tags: `else_if_not_draft`, `else_if_draft`.
-  These are meant for use within `if_draft` and `unless_draft`, respectively.
+* Jekyll block tags: `if_draft`, `if_page_draft`, `unless_draft`, and `unless_page_draft`.
+* Jekyll inline tags: `else_if_not_draft` and `else_if_draft`.
+  These are meant for use within the above block tags.
   Both of them are identical; they are both provided so usage seems natural.
 * Jekyll inline tag `draft_html`, which generates HTML that indicates if
   the enclosing document or a specified is a draft.
 * Liquid filters:
   * `is_draft` returns a boolean indicating if the document passed to it is a draft.
+  * `page_match_is_draft` is like `is_draft` but works on other pages.
   * `draft_html` returns the same string the `draft_html` tag returns,
     indicating if the document passed to it is a draft.
+  * `page_match_draft_html` is like `draft_html` but works on other pages.
 * Module `Jekyll::Draft` defines an API that your plugin can call.
   It has the following methods:
   * `draft?` returns a boolean indicating if the document passed to it is a draft.
-  * `draft_only?` returns a boolean indicating if the document passed to it is a draft.
   * `draft_html` returns the same string that `draft_html` tag returns;
     the response indicates if the document passed to it is a draft.
-  * `page_match` returns the Jekyll page whose url uniquely contains a string
+  * `page_match` returns the Jekyll page whose url uniquely ends with a string.
   * `root` returns the path to the root of the collection that the document passed to it is a member of.
     This method is not functionally related to Jekyll draft documents;
     it should be packaged separately ... maybe one day...
@@ -114,8 +115,7 @@ so you can learn how to write Jekyll pages that include this functionality.
 
 ## Usage in a Web Page
 
-This section documents block tags `if_draft`, `if_page_draft`, `unless_draft` and `unless_page_draft`,
-as well as inline tag `draft_html`.
+This section documents the usage of the inline and block tags described [above](#top).
 
 The `if_draft` and `if_page_draft` block tags act as `if-then` or `if-then-else` programming constructs.
 Draft documents only exist in development mode.
@@ -250,8 +250,9 @@ These variables are only defined within the body of `if_page_draft` and `unless_
 
 ### Else Clauses
 
-You can use the keywords `else_if_draft`, `else_unless_draft`, `else_if_page_draft`, and `else_unless_page_draft` interchangeably.
-They are actually made by registering the same code twice with different subclass names.
+You can use the keywords
+`else_if_draft`, `else_if_page_draft`, `else_unless_draft`, and `else_unless_page_draft` interchangeably.
+They are actually made by registering the same code multiple times with different subclass names.
 Use the keyword that makes the most sense to you.
 
 

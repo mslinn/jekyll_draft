@@ -31,6 +31,7 @@ class TestLiquidContext < Liquid::Context
       "description" => "Jekyll draft demo",
       "dir"         => "/",
       "excerpt"     => nil,
+      "href"        => "/index.html",
       "layout"      => "default",
       "name"        => "index.html",
       "path"        => "index.html",

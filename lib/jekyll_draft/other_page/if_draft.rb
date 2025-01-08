@@ -7,8 +7,8 @@ class DraftPageBase < JekyllSupport::JekyllBlock
   # Content has a true clause, and optionally might have an else clause
   # Clauses can reference two variables: path_portion and matched_page
   #   path_portion is specified as the sole argument to this block tag
-  #   matched_path is the Jekyll::Page with a URL that uniquely includes path_portion,
-  #                or nil if no matching Jekyll::Page was found
+  #   matched_path is the APage with an href that uniquely includes path_portion,
+  #                or nil if no matching APage was found
   def render_impl(content)
     true_content, false_content, extra_content = content.split(RECORD_SEPARATOR)
     raise DraftError, "Warning: More than one else clause detected" if extra_content
@@ -42,11 +42,11 @@ class DraftPageBase < JekyllSupport::JekyllBlock
       expression = Regexp.last_match[2]
       if expression == 'matched_page' && matched_page.class != String
         @logger.warn do
-          expression = 'matched_page.url'
+          expression = 'matched_page.href'
           <<~END_MSG
-            The expression #{token} should either specify a property, for example <<matched_page.url>>,
+            The expression #{token} should either specify a property, for example <<matched_page.href>>,
             or a hash value, for example <<matched_page['title']>>.
-            The expression was modified to <<matched_page.url>> for you.
+            The expression was modified to <<matched_page.href>> for you.
           END_MSG
         end
       end

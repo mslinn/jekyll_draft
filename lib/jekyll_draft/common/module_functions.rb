@@ -41,27 +41,27 @@ module Jekyll
     # This is a computationally intense method, and really slows down site generation.
     # TODO: implement cache in front of sorted objects containing paths and page reference
     # This cache is also needed by compute_link_and_text in jekyll_href
-    # @return Jekyll::Page whose url uniquely contains path_portion,
+    # @return APage whose href uniquely contains path_portion,
     #         or `path_portion` as a String for non-local URLs.
     def page_match(path_portion, raise_error_if_no_match: true)
       return :non_local_url if path_portion.start_with? 'http:', 'https:', 'mailto'
 
       matching_pages = ::AllCollectionsHooks
         .everything
-        .select { |x| x&.url&.end_with? path_portion } || []
+        .select { |x| x&.href&.end_with? path_portion } || []
       case matching_pages.length
       when 0
         return '' unless raise_error_if_no_match
 
         Draft.logger.error do
-          "No page or asset path has a url that includes the string '#{path_portion}'"
+          "No page or asset path has a href that includes the string '#{path_portion}'"
         end
         exit! 1 # TODO: check config before dieing
       when 1
         matching_pages.first
       else
-        Draft.logger.error do # :\n  #{matching_pages.map(&:url).join("\n  ")}
-          "More than one page or asset path has a url that includes the string '#{path_portion}'"
+        Draft.logger.error do # :\n  #{matching_pages.map(&:href).join("\n  ")}
+          "More than one page or asset path has a href that includes the string '#{path_portion}'"
         end
         exit! 2 # The user should fix this problem before allowing the website to generate
       end
@@ -75,10 +75,10 @@ module Jekyll
 
       collection_name = doc.collection
       docs = site.key?(collection_name) ? site[collection_name] : site.collections[collection_name].docs
-      index = docs.find { |d| d.url.end_with? 'index.html' }
-      return index.url if index
+      index = docs.find { |d| d.href.end_with? 'index.html' }
+      return index.href if index
 
-      docs.min.url
+      docs.min.href
     end
 
     module_function :draft?, :draft_html, :page_match, :root
