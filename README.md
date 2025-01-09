@@ -287,7 +287,7 @@ By default, if the document is a draft, and the Jekyll website generation was pe
 `draft_html` emits ` <i class='jekyll_draft>Draft</i>`,
 otherwise it does not emit anything.
 
-<p>You can change this behavior several ways:</p>
+<p>You can change this behavior in several ways:</p>
 
 * Add the <code>draft_output</code> parameter to specify the HTML that should be
   emitted if the document is a draft,
@@ -431,7 +431,7 @@ and the Jekyll website generation was performed in development mode:
 #### `draft_html`
 
 By default, the draft_html Liquid filter generates HTML if a page is invisible when published in `production` mode.
-If the page is not a draft then the empty string is returned.
+If the page is not a draft, then the empty string is returned.
 
 The optional parameters for the `draft_html` inline tag are not available for
 use with the `draft_html` filter.
