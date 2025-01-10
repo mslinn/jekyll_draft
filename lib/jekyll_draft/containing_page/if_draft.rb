@@ -6,7 +6,7 @@ class DraftBase < JekyllSupport::JekyllBlock
 
   def render_impl(content)
     true_value, false_value, extra = content.split(RECORD_SEPARATOR)
-    raise DraftError, "Warning: More than one else clause detected" if extra
+    raise DraftError, 'Warning: More than one else clause detected' if extra
 
     if @tag_name == IF_DRAFT
       return ::Jekyll::Draft.draft?(@page) ? true_value : false_value
@@ -21,5 +21,5 @@ class IfDraft < DraftBase
 end
 
 class UnlessDraft < DraftBase
-  ::JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT, quiet: true)
 end

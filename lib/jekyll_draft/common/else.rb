@@ -15,21 +15,21 @@ class ElseBase < JekyllSupport::JekyllTag
 end
 
 class ElseDraft < ElseBase
-  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_DRAFT, quiet: true)
 end
 
 class ElseNotDraft < ElseBase
-  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_IF_NOT_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_IF_NOT_DRAFT, quiet: true)
 end
 
 class ElsePageDraft < ElseBase
-  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_IF_PAGE_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_IF_PAGE_DRAFT, quiet: true)
 end
 
 class ElseUnlessDraft < ElseBase
-  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_UNLESS_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_UNLESS_DRAFT, quiet: true)
 end
 
 class ElseUnlessPageDraft < ElseBase
-  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_UNLESS_PAGE_DRAFT)
+  ::JekyllSupport::JekyllPluginHelper.register(self, ELSE_UNLESS_PAGE_DRAFT, quiet: true)
 end

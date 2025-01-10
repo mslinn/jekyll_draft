@@ -44,12 +44,15 @@ module Jekyll
     # This cache is also needed by compute_link_and_text in jekyll_href
     # @return APage whose href uniquely contains path_portion,
     #         or `path_portion` as a String for non-local URLs.
-    def page_match(path_portion, raise_error_if_no_match: true)
+    def page_match(path_portion, raise_error_if_no_match: true, verify_unique_match: false)
       return :non_local_url if path_portion.start_with? 'http:', 'https:', 'mailto'
 
-      matching_pages = ::AllCollectionsHooks
-        .everything
-        .select { |x| x&.href&.end_with? path_portion } || []
+      matching_pages = if verify_unique_match
+                         ::AllCollectionsHooks.everything.select { |x| x&.href&.end_with? path_portion } || []
+                       else
+                         match = ::AllCollectionsHooks.everything.find { |x| x&.href&.end_with? path_portion }
+                         match.nil? ? [] : [match]
+                       end
       case matching_pages.length
       when 0
         return '' unless raise_error_if_no_match

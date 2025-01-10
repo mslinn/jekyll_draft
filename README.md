@@ -123,6 +123,24 @@ so you can learn how to write Jekyll pages that include this functionality.
    ```
 
 
+## Configuration
+
+The default settings run more quickly than id `verify_unique_match` is enabled,
+which guarantee that no broken internal links exist.
+If a Jekyll web page has hundreds or thousands of pages,
+site generation can take many minutes if `verify_unique_match` is enabled.
+
+The following settings are the default values for `_config.yml`.
+They apply to all tags defined by this plugin
+(`if_draft`, `unless_draft`, `if_page_draft`, `unless_page_draft`):
+
+```yaml
+if_draft:
+  raise_error_if_no_match: true
+  verify_unique_match: false
+```
+
+
 ## Usage in a Web Page
 
 This section documents the usage of the inline and block tags described [above](#top).

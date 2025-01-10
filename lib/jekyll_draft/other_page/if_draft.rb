@@ -11,12 +11,27 @@ class DraftPageBase < JekyllSupport::JekyllBlock
   #                or nil if no matching APage was found
   def render_impl(content)
     true_content, false_content, extra_content = content.split(RECORD_SEPARATOR)
-    raise DraftError, "Warning: More than one else clause detected" if extra_content
+    raise DraftError, 'Warning: More than one else clause detected' if extra_content
 
     @path_portion = @argument_string.strip
-    raise DraftError, "Error: path_portion was not specified" unless @path_portion
+    raise DraftError, 'Error: path_portion was not specified' unless @path_portion
 
-    @matched_page = @path_portion.start_with?('#') ? @page : Jekyll::Draft.page_match(@path_portion)
+    tag_config = @config['if_draft']
+    if tag_config
+      @raise_error_if_no_match = tag_config['raise_error_if_no_match'] # defaults true
+      @raise_error_if_no_match = @raise_error_if_no_match ? @raise_error_if_no_match == true : true
+
+      @verify_unique_match     = tag_config['verify_unique_match'] == true # defaults false
+    else
+      @logger.warn { "There is no entry for #{@tag_name} in _config.yml; default values were applied." }
+    end
+
+    @matched_page = if @path_portion.start_with?('#')
+                      @page
+                    else
+                      Jekyll::Draft.page_match(@path_portion, raise_error_if_no_match: @raise_error_if_no_match,
+                                                              verify_unique_match:     @verify_unique_match)
+                    end
     raise DraftError, "Error: path_portion='#{@path_portion}' does not specify a local page." if @matched_page == :non_local_url
 
     is_draft = Jekyll::Draft.draft? @matched_page
@@ -60,9 +75,9 @@ class DraftPageBase < JekyllSupport::JekyllBlock
 end
 
 class IfPageDraft < DraftPageBase
-  JekyllSupport::JekyllPluginHelper.register(self, IF_DRAFT)
+  JekyllSupport::JekyllPluginHelper.register(self, IF_DRAFT, quiet: true)
 end
 
 class UnlessPageDraft < DraftPageBase
-  JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT)
+  JekyllSupport::JekyllPluginHelper.register(self, UNLESS_DRAFT, quiet: true)
 end

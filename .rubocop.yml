@@ -55,7 +55,7 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Exclude:
     - spec/**/*
-  Max: 50
+  Max: 60
 
 Metrics/CyclomaticComplexity:
   Max: 20
