@@ -16,21 +16,13 @@ class DraftPageBase < JekyllSupport::JekyllBlock
     @path_portion = @argument_string.strip
     raise DraftError, 'Error: path_portion was not specified' unless @path_portion
 
-    tag_config = @config['if_draft']
-    if tag_config
-      @raise_error_if_no_match = tag_config['raise_error_if_no_match'] # defaults true
-      @raise_error_if_no_match = @raise_error_if_no_match ? @raise_error_if_no_match == true : true
-
-      @verify_unique_match     = tag_config['verify_unique_match'] == true # defaults false
-    else
-      @logger.warn { "There is no entry for #{@tag_name} in _config.yml; default values were applied." }
-    end
+    configure
 
     @matched_page = if @path_portion.start_with?('#')
                       @page
                     else
-                      Jekyll::Draft.page_match(@path_portion, raise_error_if_no_match: @raise_error_if_no_match,
-                                                              verify_unique_match:     @verify_unique_match)
+                      Jekyll::Draft.page_match(@path_portion, error_if_no_match:   @error_if_no_match,
+                                                              verify_unique_match: @verify_unique_match)
                     end
     raise DraftError, "Error: path_portion='#{@path_portion}' does not specify a local page." if @matched_page == :non_local_url
 
@@ -44,6 +36,26 @@ class DraftPageBase < JekyllSupport::JekyllBlock
   rescue StandardError => e
     puts e.full_message
     exit!
+  end
+
+  private
+
+  def configure
+    tag_config = @config['if_draft']
+    if tag_config
+      @error_if_no_match = tag_config['error_if_no_match'] # defaults true
+      @error_if_no_match = @error_if_no_match ? @error_if_no_match == true : true
+
+      @verify_unique_match     = tag_config['verify_unique_match'] == true # defaults false
+    else
+      @logger.warn { "There is no entry for #{@tag_name} in _config.yml; default values were applied." }
+    end
+
+    env_var = ENV.fetch('if_draft_error_if_no_match', nil) # Environment variable overrides _config.yml setting
+    @error_if_no_match = env_var != 'false' if env_var
+
+    env_var = ENV.fetch('if_draft_verify_unique_match', nil) # Environment variable overrides _config.yml setting
+    @verify_unique_match = env_var != 'false' if env_var
   end
 
   def process_variables(markup)

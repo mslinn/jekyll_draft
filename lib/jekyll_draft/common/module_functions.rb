@@ -44,7 +44,7 @@ module Jekyll
     # This cache is also needed by compute_link_and_text in jekyll_href
     # @return APage whose href uniquely contains path_portion,
     #         or `path_portion` as a String for non-local URLs.
-    def page_match(path_portion, raise_error_if_no_match: true, verify_unique_match: false)
+    def page_match(path_portion, error_if_no_match: true, verify_unique_match: false)
       return :non_local_url if path_portion.start_with? 'http:', 'https:', 'mailto'
 
       matching_pages = if verify_unique_match
@@ -55,12 +55,12 @@ module Jekyll
                        end
       case matching_pages.length
       when 0
-        return '' unless raise_error_if_no_match
+        return '' unless error_if_no_match
 
         Draft.logger.error do
           "No page or asset path has a href that includes the string '#{path_portion}'"
         end
-        exit! 1 # TODO: check config before dieing
+        exit! 1 if @error_if_no_match
       when 1
         matching_pages.first
       else

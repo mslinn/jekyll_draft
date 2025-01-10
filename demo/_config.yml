@@ -33,7 +33,7 @@ exclude:  # Wildcards are not supported yet https://github.com/jekyll/jekyll-wat
   - Gemfile.lock
   - README.md
 if_draft:
-  raise_error_if_no_match: true
+  error_if_no_match: true
   verify_unique_match: false
 ignore_theme_config: true
 liquid:
