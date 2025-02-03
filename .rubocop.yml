@@ -73,6 +73,9 @@ Naming/FileName:
 RSpec/ExampleLength:
   Max: 20
 
+RSpec/IndexedLet:
+  Enabled: false
+
 RSpec/MultipleExpectations:
   Max: 15
 
