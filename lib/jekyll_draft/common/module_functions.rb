@@ -48,10 +48,8 @@ module Jekyll
       return :non_local_url if path_portion.start_with? 'http:', 'https:', 'mailto'
 
       matching_pages = if verify_unique_match
-                         #  ::AllCollectionsHooks.everything.select { |x| x&.href&.end_with? path_portion } || []
                          ::AllCollectionsHooks.sorted_lru_files.select path_portion
                        else
-                         #  match = ::AllCollectionsHooks.everything.find { |x| x&.href&.end_with? path_portion }
                          match = ::AllCollectionsHooks.sorted_lru_files.find path_portion
                          match.nil? ? [] : [match]
                        end
