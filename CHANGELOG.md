@@ -2,9 +2,9 @@
 
 ## 2.1.0 / 2024-12-30
 
-* Added ability to return a page in any collection, or those not in a collection, whose path uniquely contains
-  a string is a draft or not.
-  Does not work on pages that are not in a collection.
+* Added ability to return a page in any collection, or those not in a collection,
+  whose path uniquely contains a string is a draft or not.
+* Uses the binary search added in `jekyll_all_collections` v0.3.8 to find `APage`s whose `href` matches a suffix.
 
 
 ## 2.0.2 / 2024-07-24
