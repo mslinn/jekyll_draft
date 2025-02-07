@@ -1,10 +1,11 @@
 # Change Log
 
-## 2.1.0 / 2024-12-30
+## 2.1.0 / 2025-02-07
 
 * Added ability to return a page in any collection, or those not in a collection,
   whose path uniquely contains a string is a draft or not.
-* Uses the binary search added in `jekyll_all_collections` v0.3.8 to find `APage`s whose `href` matches a suffix.
+* Uses the binary search added in `jekyll_all_collections` v0.4.0 to find `APage`s whose `href` matches a suffix.
+* Added the `bin/release_port` script that kills hung processes being debugged
 
 
 ## 2.0.2 / 2024-07-24
