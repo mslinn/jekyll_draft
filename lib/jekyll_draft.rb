@@ -1,6 +1,8 @@
-# @author Copyright 2022 {https://www.mslinn.com Michael Slinn}
-
-require 'jekyll_plugin_support'
+if ENV['USE_JPS_SOURCE']
+  require_relative "#{ENV.fetch('jekyll_plugin_support')}/lib/jekyll_plugin_support"
+else
+  require 'jekyll_plugin_support'
+end
 require 'yaml'
 require_relative 'jekyll_draft/version' unless defined?(VERSION)
 

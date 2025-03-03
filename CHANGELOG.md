@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.0 / In process
+
+* Now requires [Jekyll 4.4.1](https://jekyllrb.com/news/2025/01/29/jekyll-4-4-1-released/) or later, and Ruby 3.2.0 or later
+
+
 ## 2.1.0 / 2025-02-07
 
 * Added ability to return a page in any collection, or those not in a collection,

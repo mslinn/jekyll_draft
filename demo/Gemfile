@@ -2,16 +2,14 @@ source 'https://rubygems.org'
 
 gem 'confidential_info_redactor'
 gem 'ffi'
-gem 'jekyll', '~> 4.3.2'
+gem 'jekyll', '~> 4.4.1'
 gem 'ptools'
 
 group :jekyll_plugins do
-  gem 'jekyll_all_collections', '>= 0.3.8'
   gem 'jekyll-assets', git: 'https://github.com/envygeeks/jekyll-assets'
   gem 'jekyll_draft', path: "../"
   gem 'jekyll-environment-variables'
-  gem 'jekyll_href'
-  gem 'jekyll_plugin_logger'
+  gem 'jekyll_href', '>= 3.0.0'
   gem 'jekyll_pre'
   gem 'jekyll-redirect-from'
   gem 'jekyll-sort'

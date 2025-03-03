@@ -6,10 +6,10 @@ title: Comprehensive Tests
 <!-- #region if_draft -->
 <h2 id="if_draft_else">if_draft else clause</h2>
 {% if_draft %}
-<p class="error">
-  Error: this document was erroneously classified as a draft.
-  {% draft_html %}
-</p>
+  <p class="error">
+    Error: this document was erroneously classified as a draft.
+    {% draft_html %}
+  </p>
 {% else_if_draft %}
   <p>
     This page truly is not a draft.
@@ -19,6 +19,10 @@ title: Comprehensive Tests
 
 
 <!-- #region unless_page_draft -->
+<h2 id="unless_page_draft">unless_page_draft else clause</h2>
+<p>
+  The following should not be shown as an error:
+</p>
 {% assign count = 1 %}
 {% unless_page_draft is_a_draft.html %}
   {% assign count = count | plus: 1 %}
@@ -28,29 +32,45 @@ title: Comprehensive Tests
 
 
 <!-- #region Page Match -->
-<h2>Page Match</h2>
+<h2 id="match">Page Match</h2>
+
+<!-- #region if_page_draft -->
+<h3 id="if_page_draft">if_page_draft</h3>
 {% if_page_draft /blog/2022/05/01/draft.html %}
   <p>
-    <code><<path_portion>></code>, with href <code><<matched_page.href>></code>, was properly classified as a draft.
+    <code><<path_portion>></code>, with url <code><<matched_page&.href>></code>, was properly classified as a draft.
   </p>
 {% else_unless_page_draft %}
+  <p class="error">
+    This should not appear.<br>
+    <code><<path_portion>></code> has url <code><<matched_page&.href>></code>
+  </p>
   {% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
   <p class="error">
-    Error: <code><<path_portion>></code>, with href <code><<matched_page.href>></code>, was not classified as a draft.
+    Error: <code><<path_portion>></code>, with url <code><<matched_page&.href>></code>, was not classified as a draft.
   </p>
 {% endif_page_draft %}
+<!-- endregion -->
 
+
+<!-- #region unless_page_draft -->
+<h3 id="unless_page_draft">unless_page_draft</h3>
 {% unless_page_draft i_am_published.html %}
-<p>
-  <code><<path_portion>></code>, with href <code><<matched_page.href>></code>, was properly classified as a draft.
-</p>
+  <p>
+    <code><<path_portion>></code>, with url <code><<matched_page&.href>></code>, was properly classified as a draft.
+  </p>
 {% else_unless_page_draft %}
-{% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
-<p class="error">
-  Error: <code><<path_portion>></code>, with href <code><<matched_page.href>></code>, was not classified as a draft.
-</p>
+  <p class="error">This should not appear.</p>
+  {% draft_html published_output="<p style='color: red; background: white;'>Not a draft</p>" %}
+  <p class="error">
+    Error: <code><<path_portion>></code>, with url <code><<matched_page&.href>></code>, was not classified as a draft.
+  </p>
 {% endunless_page_draft %}
+<!-- endregion -->
 
+
+<!-- #region page_match_draft_html -->
+<h3 id="page_match_draft_html">page_match_draft_html</h3>
 <p>
   This should be a draft: {{ "unpublished.html" | page_match_draft_html }}.
 </p>
@@ -64,10 +84,11 @@ title: Comprehensive Tests
 </p>
 {%- endcomment -%}
 <!-- endregion -->
+<!-- endregion -->
 
 
-<!-- #region Please Ensure -->
-<h2 id="how">Please Ensure</h2>
+<!-- #region Visual Check -->
+<h2 id="visual">Visual Check</h2>
 <!-- #region implicit -->
 <ol>
   <li>

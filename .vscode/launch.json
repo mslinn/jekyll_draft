@@ -19,7 +19,35 @@
       ],
       "cwd": "${workspaceRoot}/demo",
       "debugPort": "0",
-      "name": "Debug Demo",
+      "env": {
+        "JEKYLL_ENV": "development",
+        "USE_JPS_SOURCE": true
+      },
+      "name": "Draft Demo development",
+      "request": "launch",
+      "script": "${workspaceRoot}/binstub/jekyll",
+      "type": "rdbg",
+      "showProtocolLog": true
+    },
+    {
+      "args": [
+        "serve",
+        "--livereload_port", "35724",
+        "--force_polling",
+        "--host", "0.0.0.0",
+        "--port", "4007",
+        "--future",
+        "--incremental",
+        "--livereload",
+        "--drafts",
+        "--unpublished"
+      ],
+      "cwd": "${workspaceRoot}/demo",
+      "debugPort": "0",
+      "env": {
+        "JEKYLL_ENV": "production"
+      },
+      "name": "Draft Demo production",
       "request": "launch",
       "script": "${workspaceRoot}/binstub/jekyll",
       "type": "rdbg",

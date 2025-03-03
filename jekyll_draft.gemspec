@@ -1,6 +1,6 @@
 require_relative 'lib/jekyll_draft/version'
 
-Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
+Gem::Specification.new do |spec|
   github = 'https://github.com/mslinn/jekyll_draft'
 
   spec.authors     = ['Mike Slinn']
@@ -27,11 +27,12 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
 
   END_MESSAGE
   spec.require_paths         = ['lib']
-  spec.required_ruby_version = '>= 2.6.0'
+  spec.required_ruby_version = '>= 3.2.0'
   spec.summary               = 'This Jekyll filter detects draft documents.'
   spec.test_files            = spec.files.grep(%r{^(test|spec|features)/})
   spec.version               = DraftVersion::VERSION
 
-  spec.add_dependency 'jekyll', '>= 3.5.0'
-  spec.add_dependency 'jekyll_plugin_support', '>=1.1.0'
+  spec.add_dependency 'jekyll', '>= 4.4.0'
+  spec.add_dependency 'jekyll_plugin_support', '>=3.0.0'
+  spec.add_dependency 'sorted_set'
 end

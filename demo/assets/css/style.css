@@ -152,7 +152,10 @@ table, th, td {
 }
 
 .error {
-  color: red;
+  background-color: red;
+  color: black;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .fullsize {

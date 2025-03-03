@@ -93,8 +93,8 @@ so you can learn how to write Jekyll pages that include this functionality.
 
    ```ruby
    group :jekyll_plugins do
-     gem 'jekyll_all_collections', '>= 0.3.8'
-     gem 'jekyll_draft', '>=2.1.0'
+     gem 'jekyll_plugin_support', '>= 3.0.0'
+     gem 'jekyll_draft', '>=3.0.0'
    end
    ```
 
@@ -112,8 +112,8 @@ so you can learn how to write Jekyll pages that include this functionality.
 1. Add the following to your gem&rsquo;s `.gemspec`:
 
    ```ruby
-   spec.add_dependency 'jekyll_all_collections', '>= 0.3.8'
-   spec.add_dependency 'jekyll_draft', '>=2.1.0'
+   spec.add_dependency 'jekyll_plugin_support', '>= 3.0.0'
+   spec.add_dependency 'jekyll_draft', '>=3.0.0'
    ```
 
 2. Type:

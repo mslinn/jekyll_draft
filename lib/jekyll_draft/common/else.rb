@@ -1,5 +1,3 @@
-require 'jekyll_plugin_support'
-
 class ElseBase < JekyllSupport::JekyllTag
   VERSION = '0.1.0'.freeze
 

@@ -24,7 +24,12 @@ module Jekyll
 
       false
     rescue StandardError => e
-      Draft.logger.error { e.full_message }
+      msg = e.full_message
+      if msg.length < 250
+        Draft.logger.error { msg }
+      else
+        Draft.logger.error { "#{msg[0..125]} ... #{msg[-125..msg.length]}" }
+      end
       false
     end
 
@@ -35,25 +40,27 @@ module Jekyll
 
       " <i class='jekyll_draft'>Draft</i>"
     rescue StandardError => e
-      Draft.logger.error { e.full_message }
+      msg = e.full_message
+      if msg.length < 250
+        Draft.logger.error { msg }
+      else
+        Draft.logger.error { "#{msg[0..125]} ... #{msg[-125..msg.length]}" }
+      end
       ''
     end
 
-    # This is a computationally intense method, and really slows down site generation.
-    # TODO: implement cache in front of sorted objects containing paths and page reference
-    # This cache is also needed by compute_link_and_text in jekyll_href
     # @return APage whose href uniquely contains path_portion,
     #         or `path_portion` as a String for non-local URLs.
     def page_match(path_portion, error_if_no_match: true, verify_unique_match: false)
       return :non_local_url if path_portion.start_with? 'http:', 'https:', 'mailto'
 
       matching_pages = if verify_unique_match
-                         ::AllCollectionsHooks.sorted_lru_files.select path_portion
+                         ::AllCollectionsHooks.sorted_lru_files.find(path_portion)
                        else
-                         match = ::AllCollectionsHooks.sorted_lru_files.find path_portion
+                         match = ::AllCollectionsHooks.sorted_lru_files.find(path_portion)
                          match.nil? ? [] : [match]
                        end
-      case matching_pages.length
+      case matching_pages.size
       when 0
         return '' unless error_if_no_match
 
@@ -70,7 +77,12 @@ module Jekyll
         exit! 2 # The user should fix this problem before allowing the website to generate
       end
     rescue StandardError => e
-      puts e.full_message
+      msg = e.full_message
+      if msg.length < 250
+        Draft.logger.error { msg }
+      else
+        Draft.logger.error { "#{msg[0..125]} ... #{msg[-125..msg.length]}" }
+      end
     end
 
     # @return path to root of the collection that doc is a member of
@@ -83,6 +95,13 @@ module Jekyll
       return index.href if index
 
       docs.min.href
+    rescue StandardError => e
+      msg = e.full_message
+      if msg.length < 250
+        Draft.logger.error { msg }
+      else
+        Draft.logger.error { "#{msg[0..150]} ... #{msg[-150..msg.length]}" }
+      end
     end
 
     module_function :draft?, :draft_html, :page_match, :root
