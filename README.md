@@ -312,7 +312,7 @@ Here is an example of embedding the `draft_html` inline tag into an HTML documen
 ```
 
 By default, if the document is a draft, and the Jekyll website generation was performed in development mode,
-`draft_html` emits ` <i class='jekyll_draft>Draft</i>`,
+`draft_html` emits ` <i class='jekyll_draft'>Draft</i>`,
 otherwise it does not emit anything.
 
 <p>You can change this behavior in several ways:</p>
