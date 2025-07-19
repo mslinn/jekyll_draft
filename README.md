@@ -5,6 +5,9 @@ visible when the website is published in `production` mode.
 The Jekyll documentation is scattered and incomplete regarding detecting draft pages and documents.
 This plugin provides standard ways for detecting draft pages and documents.
 
+You can display the Jekyll mode that was active when a page was
+generated with `{{jekyll.environment}}`.
+
 `Jekyll_draft` provides the following:
 
 * Jekyll block tags: `if_draft`, `if_page_draft`, `unless_draft`, and `unless_page_draft`.
