@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.0 / In process
+## 3.0.0 / 2025-08-26
 
 * Now requires [Jekyll 4.4.1](https://jekyllrb.com/news/2025/01/29/jekyll-4-4-1-released/) or later, and Ruby 3.2.0 or later
 

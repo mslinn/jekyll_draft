@@ -23,7 +23,7 @@ end
 
 # Mock for Liquid::Context
 class TestLiquidContext < Liquid::Context
-  def initialize
+  def initialize(published: false)
     super
 
     page = {
@@ -35,6 +35,7 @@ class TestLiquidContext < Liquid::Context
       "layout"      => "default",
       "name"        => "index.html",
       "path"        => "index.html",
+      "published"   => published,
       "title"       => "Welcome",
       "url"         => "/",
     }
