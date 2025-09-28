@@ -1,5 +1,5 @@
 require 'rspec/match_ignoring_whitespace'
-require_relative 'lib/draft'
+require_relative '../lib/jekyll_draft'
 
 class JekyllPluginHelperOptionsTest
   RSpec.describe Jekyll::Draft do
